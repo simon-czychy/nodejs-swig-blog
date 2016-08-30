@@ -1,0 +1,14 @@
+.container {
+    margin: 0% 35%;
+    text-align: center;
+}
+
+.message {
+    font-size: 30px;
+    font-family: "Arial";
+    color: #FFFFFF;
+    padding: 20px;
+    border: 1px solid #444444;
+    border-radius: 15px;
+    background-color: #990000;
+}
