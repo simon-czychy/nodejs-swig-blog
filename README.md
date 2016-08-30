@@ -36,4 +36,4 @@ Run your skeleton with:
 nodejs app.js
 ```
 
-Open your browser and navigate to http://localhost/
+Open your browser and navigate to [http://localhost/](http://localhost/)
