@@ -5,7 +5,7 @@ Skeleton Nodeproject with Express and Pug (formerly known as "Jade")
 
 ### Linux
 ```
-apt-get install nodejs npm
+$ apt-get install nodejs npm
 ```
 
 ### Mac
@@ -21,19 +21,19 @@ Download https://nodejs.org/en/download/ and install it. Npm is included.
 Open a terminal and navigate to your skeleton nodejs-express-pug folder.
 
 ```
-cd path/to/your/skeleton
+$ cd path/to/your/skeleton
 ```
 
 Install dependencies with:
 ```
-npm install
+$ npm install
 ```
 
 # Done
 
 Run your skeleton with:
 ```
-nodejs app.js
+$ nodejs app.js
 ```
 
 Open your browser and navigate to [http://localhost/](http://localhost/)
