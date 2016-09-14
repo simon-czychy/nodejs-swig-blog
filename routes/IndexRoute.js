@@ -6,8 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index.php', {
     get : 
     {
-      title: 'Node With Express and Pug', 
-      message: 'Welcome to Nodejs With Express and Pug' 
+      title: 'Blog Sausage',
+      message: 'Here you can find some awesome Blog posts!'
     }
   });
 });
