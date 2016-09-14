@@ -15,7 +15,17 @@
 {% block content %}
 
     <div class="container body error">
-        <h3>Message:</h3> {{ message }}
+        {% if status %}
+            {% if status == '404' %}
+                <h3>Oops! Couldn't find the requested page!</h3>
+            {% else %}
+                <h3>Message:</h3> {{ message }}
+                <pre>Error: {{ error }}</pre>
+            {% endif %}
+        {% else %}
+            <h3>Message:</h3> {{ message }}
+            <pre>Error: {{ error }}</pre>
+        {% endif %}
     </div>
 
 {% endblock %}
