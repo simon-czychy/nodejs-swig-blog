@@ -4,6 +4,7 @@ var phpExpress = require('php-express')({
 });
 // Default Route for Index
 var IndexRoute = require('./routes/IndexRoute');
+var LoginRoute = require('./routes/LoginRoute');
 
 //create express instance
 var app = express();
@@ -24,6 +25,7 @@ app.use('/static', express.static(__dirname + '/static'));
 
 //Route to Index
 app.use('/', IndexRoute);
+app.use('/login', LoginRoute);
 
 // catch 404
 app.use(function(req, res, next) {
@@ -32,11 +34,12 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-//Display errors from pug etc.
+//Display errors from twig etc.
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     get: {
+      status: err.status,
       message: err.message,
       error: err
     }
