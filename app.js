@@ -1,5 +1,7 @@
 var express = require('express');
-var path = require('path');
+var phpExpress = require('php-express')({
+  binPath: 'php'
+});
 // Default Route for Index
 var IndexRoute = require('./routes/IndexRoute');
 
@@ -9,11 +11,13 @@ var app = express();
 //set port
 app.set('port', 80);
 
-//set views directory
-app.set('views', path.join(__dirname, 'views'));
 
-//set vieew engine
-app.set('view engine', 'pug');
+// set view engine to php-express
+app.set('views', './application');
+app.engine('php', phpExpress.engine);
+app.set('view engine', 'php');
+//route all php files to the router
+app.all(/.+\.php$/, phpExpress.router);
 
 //set folder for static files like css, js, etc. to be served
 app.use('/static', express.static(__dirname + '/static'));
@@ -32,8 +36,10 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
-    message: err.message,
-    error: err
+    get: {
+      message: err.message,
+      error: err
+    }
   });
 });
 
@@ -41,4 +47,6 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 //listen on given port
-app.listen(app.get('port'));
+app.listen(app.get('port'), function() {
+  console.log("PHPExpress app listening...");
+});
