@@ -1,14 +1,20 @@
-.container {
-    margin: 0% 35%;
-    text-align: center;
+.header {
+    border-bottom: 2px solid black;
+}
+.header .inner .title {
+    font-size: 28px;
+    font-weight: 700;
+    font-style: italic;
+    padding: 25px 0px;
+    color: #000000;
 }
 
-.message {
-    font-size: 30px;
-    font-family: "Arial";
-    color: #FFFFFF;
-    padding: 20px;
-    border: 1px solid #444444;
-    border-radius: 15px;
-    background-color: #990000;
+.body {
+    margin-top:50px;
+}
+
+.body.error {
+    background: lightgrey;
+    border-radius: 10px;
+    padding: 20px 40px;
 }
