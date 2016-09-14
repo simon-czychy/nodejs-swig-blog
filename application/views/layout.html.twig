@@ -13,6 +13,9 @@
 </head>
 <body>
 {% block header %}
+    {% include 'partials/header.html.twig' with {
+        'title': title
+    }  only %}
 {% endblock %}
 {% block content %}
 {% endblock %}
@@ -20,8 +23,6 @@
 {% endblock %}
 <script src="static/js/jquery-2.1.4.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/Container.class.js"></script>
-<script src="static/js/Device.class.js"></script>
 <script src="static/js/script.js"></script>
 
 
