@@ -4,18 +4,32 @@
 
 {% block header %}
 
-    <div class="container-fluid header">
-        <div class="container inner">
-            <div class="title">{{ title }}</div>
-        </div>
-    </div>
+{% include 'partials/header.html.twig' with {
+    'title': title
+}  only %}
 
 {% endblock %}
 
 {% block content %}
 
-    <div class="container-fluid body">
-        {{ message }}
+    <div class="container body">
+        <div class="row">
+            <div class="col-md-8">
+            <p class="message">{{ message }}</p>
+
+                <div class="articles">
+                {% include 'partials/article.html.twig' with {
+                    'title': 'Lorem ipsum dolor sit amet',
+                    'subtitle': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr',
+                    'content': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+                } only %}
+                </div>
+            </div>
+        </div>
     </div>
+
+{% endblock %}
+
+{% block footer %}
 
 {% endblock %}
