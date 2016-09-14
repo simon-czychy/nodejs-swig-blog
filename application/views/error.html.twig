@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}ERROR{% endblock %}
+
+{% block header %}
+
+    <div class="container-fluid header">
+        <div class="container inner">
+            <div class="title">Something wrent Wrong!</div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container body error">
+        <h3>Message:</h3> {{ message }}
+    </div>
+
+{% endblock %}
