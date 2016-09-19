@@ -1,0 +1,91 @@
+.body {
+  .articles {
+    .article {
+      font-family: 'Lora', serif;
+      .title {
+        padding-bottom: 10px;
+      }
+      .subtitle {
+        padding-bottom: 5px;
+      }
+      .content {
+        font-size: 16px;
+      }
+      .author {
+        margin: 25px 0px;
+        padding: 25px 0px;
+        border-bottom: 1px solid lightgrey;
+        border-top: 1px solid lightgrey;
+      }
+    }
+
+    .tags {
+      .title {
+        margin-top: 110px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid black;
+        margin-bottom: 10px;
+      }
+
+      span.tag {
+        background-color: lightgrey;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        font-size: 12px;
+        padding: 3px;
+        margin-right: 5px;
+
+        -moz-transition: all .2s ease-in;
+        -o-transition: all .2s ease-in;
+        -webkit-transition: all .2s ease-in;
+        transition: all .2s ease-in;
+
+        &:hover {
+          color: dodgerblue;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.header {
+
+  border-bottom: 2px solid black;
+  font-family: 'Open Sans', sans-serif;
+
+  .inner{
+    .login {
+      padding-top: 33px;
+      font-size: 16px;
+    }
+    .title {
+      font-size: 28px;
+      padding: 25px 0px;
+      color: #000000;
+    }
+  }
+
+
+  a.btn-login {
+    padding: 8px 20px;
+    border: 2px solid black;
+    color: black;
+    text-decoration: none;
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    background: transparent;
+    font-weight: 400;
+
+    &:hover {
+      background: black;
+      color: white;
+      font-weight: 600;
+    }
+  }
+}
+
+
+
