@@ -4,15 +4,23 @@
 
     <div class="container body">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
             <p class="message">{{ message }}</p>
-
                 <div class="articles">
-                {% include 'partials/article.html.twig' with {
-                    'title': 'Lorem ipsum dolor sit amet',
-                    'subtitle': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr',
-                    'content': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-                } only %}
+                    {% set name = 'Simon Czychy' %}
+                    {% include 'partials/article.html.twig' with {
+                        'title': 'Lorem ipsum dolor sit amet',
+                        'subtitle': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr',
+                        'content': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                        'author' : {
+                            'name': name,
+                            'avatar': {
+                                'image': 'static/img/avatar.jpg',
+                                'alt': 'Bild von '~name,
+                            },
+                            'desc': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
+                        }
+                    } only %}
                 </div>
             </div>
         </div>
