@@ -4,19 +4,48 @@
   font-family: 'Open Sans', sans-serif;
 
   .inner{
-    .login {
-      padding-top: 33px;
+    .login, .logout, .admin {
+      margin-top: 33px;
       font-size: 16px;
+    }
+    .admin {
+      margin-right:20px;
     }
     .title {
       font-size: 28px;
       padding: 25px 0px;
       color: #000000;
     }
+
+    input.username, input.password {
+      border: 2px solid black;
+      padding: 9px 0px;
+      text-align: center;
+      -moz-transition: all .2s ease-in;
+      -o-transition: all .2s ease-in;
+      -webkit-transition: all .2s ease-in;
+      transition: all .2s ease-in;
+      background: transparent;
+      font-weight: 400;
+      margin-top: 23px;
+      opacity: 0;
+      display: none;
+
+      &:focus {
+        background: black;
+        color: white;
+        font-weight: 600;
+      }
+
+      ::-webkit-input-placeholder {
+        color: black;
+        font-size: 16px;
+      }
+    }
   }
 
 
-  a.btn-login {
+  a.btn-login, a.btn-logout, a.btn-admin {
     padding: 8px 20px;
     border: 2px solid black;
     color: black;
@@ -32,8 +61,17 @@
       background: black;
       color: white;
       font-weight: 600;
+      cursor: pointer;
     }
   }
 }
 
+@keyframes scaleToOrigin {
+  0% {
+    transform: scale(1,0);
+  }
+  100% {
+    transform: scale(1,1);
+  }
+}
 

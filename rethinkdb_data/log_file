@@ -1,0 +1,20 @@
+2016-09-27T16:58:48.023419599 0.044011s notice: Recursively removing directory /home/czychy/git/nodejs-twig-blog/rethinkdb_data/tmp
+2016-09-27T16:58:48.028855824 0.049448s notice: Initializing directory /home/czychy/git/nodejs-twig-blog/rethinkdb_data
+2016-09-27T16:58:48.028923556 0.049514s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/czychy/git/nodejs-twig-blog/rethinkdb_data' did not already exist or is empty.)
+2016-09-27T16:58:48.029547958 0.050138s notice: Running rethinkdb 2.3.5 (GCC 5.4.0)...
+2016-09-27T16:58:48.032134850 0.052727s notice: Running on Linux 4.4.13-040413-generic x86_64
+2016-09-27T16:58:48.032233473 0.052824s notice: Loading data from directory /home/czychy/git/nodejs-twig-blog/rethinkdb_data
+2016-09-27T16:58:48.057282184 0.077874s info: Automatically using cache size of 737 MB
+2016-09-27T16:58:48.058416409 0.079007s notice: Listening for intracluster connections on port 29015
+2016-09-27T16:58:48.066130386 0.086721s notice: Listening for client driver connections on port 28015
+2016-09-27T16:58:48.066256083 0.086846s notice: Listening for administrative HTTP connections on port 8080
+2016-09-27T16:58:48.066258295 0.086848s notice: Listening on cluster addresses: 127.0.0.1, 127.0.1.1, ::1
+2016-09-27T16:58:48.066261281 0.086851s notice: Listening on driver addresses: 127.0.0.1, 127.0.1.1, ::1
+2016-09-27T16:58:48.066263003 0.086853s notice: Listening on http addresses: 127.0.0.1, 127.0.1.1, ::1
+2016-09-27T16:58:48.066265185 0.086855s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-09-27T16:58:48.066267844 0.086858s notice: Server ready, "simon_z1x" d6e96040-87d0-4352-afb0-9dd22a6aab32
+2016-09-27T16:59:37.060767370 49.081358s notice: Server got SIGINT from pid 0, uid 0; shutting down...
+2016-09-27T16:59:37.060853606 49.081444s notice: Shutting down client connections...
+2016-09-27T16:59:37.061101224 49.081691s notice: All client connections closed.
+2016-09-27T16:59:37.061102810 49.081693s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-09-27T16:59:37.066542600 49.087133s notice: Storage engine shut down.

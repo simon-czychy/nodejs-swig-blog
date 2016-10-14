@@ -1,0 +1,31 @@
+<div class="container-fluid header">
+    <div class="container inner">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="title">{{ title }}</div>
+            </div>
+            {% if isloggedin == true %}
+            <div class="col-md-9">
+                <div class="col-md-2 logout pull-right">
+                    <a class="btn-logout">Logout</a>
+                </div>
+                <div class="col-md-2 admin pull-right">
+                    <a href="/admin" class="btn-admin">Administration</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-md-9 pull-right">
+                <div class="col-md-offset-4 col-md-3">
+                    <input class="username" type="text" name="text" placeholder="Username">
+                </div>
+                <div class="col-md-3">
+                    <input class="password" type="password" name="password" placeholder="Password">
+                </div>
+                <div class="col-md-2 login">
+                    <a class="btn-login">Login</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
