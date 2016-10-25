@@ -4,12 +4,15 @@ loggedin = false;
 var rdbHelper = require('../DataBaseHelper');
 var rdb = require("rethinkdb");
 
+
+
+
+
 rdbHelper.connect();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  
   if(req.cookies.userid && req.cookies.email) {
     checkCookie(res, req.cookies.userid, req.cookies.email);
   }
@@ -17,7 +20,6 @@ router.get('/', function(req, res, next) {
     loggedin = false;
     res.render('index',  {
       title: 'Blog Sausage',
-      message: 'Here you can find some awesome Blog posts!',
       isloggedin: loggedin
     });
   }
