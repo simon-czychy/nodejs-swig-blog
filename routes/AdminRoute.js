@@ -10,7 +10,7 @@ rdbHelper.connect();
 router.get('/', function(req, res, next) {
 
   if(req.cookies.userid && req.cookies.email) {
-    checkCookie(res, req.cookies.userid, req.cookies.email);
+    isCookieValid(res, req.cookies.userid, req.cookies.email);
   }
   else {
     loggedin = false;
@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 
 });
 
-function checkCookie(res, userid, email) {
+function isCookieValid(res, userid, email) {
   rdb.table("users").filter(rdb.row("id").eq(userid)).filter(rdb.row("email").eq(email)).run(connection, function(err, cursor) {
     if(err) {
       throw err;
