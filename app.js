@@ -9,6 +9,7 @@ var LoginRoute = require('./routes/LoginRoute');
 var LogoutRoute = require('./routes/LogoutRoute');
 var AdminRoute = require('./routes/AdminRoute');
 
+
 //create express instance
 var app = express();
 app.use(cookieParser());
@@ -57,5 +58,5 @@ module.exports = app;
 
 //listen on given port
 app.listen(app.get('port'), function() {
-  console.log("PHPExpress app listening...");
+  console.log("Express app listening...");
 });
