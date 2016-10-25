@@ -8,6 +8,7 @@
     "crypto": "0.0.3",
     "es6-promise": "^4.0.5",
     "express": "~4.13.4",
+    "generic-pool": "^2.4.3",
     "getcomposer": "^1.3.2",
     "mongodb": "^2.2.9",
     "path": "~0.12.7",
