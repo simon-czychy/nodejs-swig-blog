@@ -11,26 +11,30 @@ $(document).ready(function() {
         scaleElement(emailinput);
         scaleElement(passwordinput);
 
-      /*  if(inputsVisible) {
-            var request = $.ajax({
-               url: "/login",
-                method: "POST",
-                data: { username: emailinput.val(), password: passwordinput.val()},
-                dataType: "json"
-            });
-
-            request.done(function() {
-                window.location = "/";
-            });
-        }*/
-
         if(inputsVisible) {
             $.ajax({
                 url: "/login",
                 data: {username: emailinput.val(), password: passwordinput.val()},
                 type: "POST",
                 success: function (result) {
-                    window.location = "/";
+                    $('.alertbox').remove();
+                    if (result == 'login-successful'){
+                      window.location = "/";
+                    }
+                    else if(result == 'user-not-found') {
+                      //$('.alertbox').remove();
+                      if($('.alertbox').length == 0){
+                          showMessage(status, "danger");
+                      }
+
+                    }
+                    else if(result == 'bad-pass') {
+                    //  $('.alertbox').remove();
+                      if($('.alertbox').length == 0){
+                          showMessage(status, "danger");
+                      }
+
+                    }
                 },
                 error: function (err, status, thrown) {
                 }
@@ -39,7 +43,7 @@ $(document).ready(function() {
 
         inputsVisible = true;
     });
-    
+
 
     var btnLogout = $(".btn-logout");
     btnLogout.on("click", function() {
@@ -51,9 +55,10 @@ $(document).ready(function() {
                     window.location = "/";
                 },
                 error: function (err, status, thrown) {
+
                 }
             });
-        
+
     });
 });
 
@@ -68,4 +73,14 @@ function fadeInInvisibleElement(element, time) {
 function scaleElement(element) {
     element.css("animation", "scaleToOrigin 0.35s")
     element.css("display", "flex");
+}
+
+
+function showMessage(status, type) {
+  var id = type + '-alert';
+  var element = '<div class="alertbox"><div class="alert alert-' + type + '" id="' + id + '"><button type="button" class="close" data-dismiss="alert">x</button><strong>Oops! </strong>User not found. Try again.</div></div>';
+  $(element).insertBefore(".body");
+  $("#"+id).fadeTo(2000, 500).slideUp(500, function(){
+    $("#"+id).slideUp(500);
+  });
 }
