@@ -37,7 +37,7 @@ function isCookieValid(res, userid, email) {
           if(result.length == 1) {
             if(row !== "" && row !== null && row !== "undefined") {
               loggedin = true;
-              res.render('admin',  {
+              res.render('admin/admin',  {
                 title: 'Blog Sausage',
                 isloggedin: loggedin
               });

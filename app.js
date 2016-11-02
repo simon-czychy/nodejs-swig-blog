@@ -8,6 +8,7 @@ var IndexRoute = require('./routes/IndexRoute');
 var LoginRoute = require('./routes/LoginRoute');
 var LogoutRoute = require('./routes/LogoutRoute');
 var AdminRoute = require('./routes/AdminRoute');
+var ArticleRoute = require('./routes/ArticleRoute');
 
 
 //create express instance
@@ -32,6 +33,7 @@ app.use('/', IndexRoute);
 app.use('/login', LoginRoute);
 app.use('/logout', LogoutRoute);
 app.use('/admin', AdminRoute);
+app.use('/article', ArticleRoute);
 
 
 
