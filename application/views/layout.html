@@ -5,23 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="static/css/font-awesome.min.css" type="text/css" >
-    <link rel="stylesheet" href="static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css" >
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
 </head>
 <body>
 {% block header %}
-
 {% endblock %}
 {% block content %}
+{{ host }}
 {% endblock %}
 {% block footer %}
 {% endblock %}
-<script src="static/js/jquery-2.1.4.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/script.js"></script>
+
+<script src="/static/js/jquery-2.1.4.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/script.js"></script>
 
 
 </body>
