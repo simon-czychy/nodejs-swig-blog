@@ -14,14 +14,12 @@ router.get('/', function(req, res, next) {
   }
   else {
     loggedin = false;
+    res.render('index',  {
+      title: 'Blog Sausage',
+      message: 'Here you can find some awesome Blog posts!',
+      isloggedin: loggedin
+    });
   }
-
-  res.render('index',  {
-    title: 'Blog Sausage',
-    message: 'Here you can find some awesome Blog posts!',
-    isloggedin: loggedin
-  });
-
 });
 
 function isCookieValid(res, userid, email) {
