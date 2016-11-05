@@ -12,9 +12,13 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
-{% block header %}
-
-{% endblock %}
+    {% include 'partials/header.html' with {
+        'title': title,
+        'isloggedin': isloggedin,
+        'isAdmin': isAdmin,
+        'showLoginButton': showLoginButton
+    }  only %}
+    
 {% block content %}
 {% endblock %}
 {% block footer %}

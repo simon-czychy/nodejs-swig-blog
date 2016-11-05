@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-loggedin = false;
+isloggedin = false;
+isAdmin = false;
 var rdbHelper = require('../DataBaseHelper');
 var rdb = require("rethinkdb");
 
@@ -18,9 +19,10 @@ router.get('/', function(req, res, next) {
   }
   else {
     loggedin = false;
-    res.render('index',  {
+    return res.render('index',  {
       title: 'Blog Sausage',
-      isloggedin: loggedin
+      isloggedin: isloggedin,
+      showLoginButton: true
     });
   }
 
@@ -28,7 +30,7 @@ router.get('/', function(req, res, next) {
 });
 
 function checkCookie(res, userid, email) {
-  rdb.table("users").filter(rdb.row("id").eq(userid)).filter(rdb.row("email").eq(email)).run(connection, function(err, cursor) {
+  rdb.table("users").filter(rdb.row("id").eq(userid)).filter(rdb.row("email").eq(email)).pluck('email', 'level').run(connection, function(err, cursor) {
     if(err) {
       throw err;
     }
@@ -42,10 +44,15 @@ function checkCookie(res, userid, email) {
           if(result.length == 1) {
             if(row !== "" && row !== null && row !== "undefined") {
               loggedin = true;
-              res.render('index',  {
+              isAdmin = false;
+              if(row["level"] == "admin") {
+                  isAdmin = true;
+              }
+              return res.render('index',  {
                 title: 'Blog Sausage',
                 message: 'Here you can find some awesome Blog posts!',
-                isloggedin: loggedin
+                isloggedin: loggedin,
+                isAdmin: isAdmin
               });
             }
           }
@@ -54,5 +61,6 @@ function checkCookie(res, userid, email) {
     }
   });
 }
+
 
 module.exports = router;

@@ -83,7 +83,7 @@ function release(connection) {
 
 
 exports.Login = function(user, password, callback, res) {
-  console.log("Login: %s, %s", user, password);
+  console.log("Login: %s", user);
 
   onConnection(function(err,connection) {
     if(err) {
@@ -126,10 +126,55 @@ exports.Login = function(user, password, callback, res) {
   });
 }
 
+
+/*
+exports.getUserLevel = function(user, callback, res) {
+
+  onConnection(function(err,connection) {
+    if(err) {
+      console.log("[ERROR][USERLEVEL]: %s:%s\n%s", err.name, err.msg, err.message);
+      callback(null);
+      return;
+    }
+
+    rdb.table("users").filter(rdb.row("level")).run(connection, function(err, cursor) {
+      if(err) {
+        console.log("[ERROR][USERLEVEL]: %s:%s\n%s", err.name, err.msg, err.message);
+        callback(null);
+      }
+      else {
+        var statusMessage = "unkown-error";
+        cursor.next(function(err, row) {
+          if(err) {
+            console.log("[ERROR][USERLEVEL][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+            release(connection);
+          }
+          else {
+              validatePassword(password, row.password, function(err, passCorrect) {
+              if(passCorrect) {
+                callback(null, row);
+                statusMessage = "login-successful";
+              }
+              else {
+
+                callback('login-failed');
+                statusMessage = "bad-pass";
+              }
+              release(connection);
+            });
+          }
+          res.send(statusMessage);
+        });
+      }
+    });
+  });
+}*/
+
 //==================================== PRIVATE METHODS ===================================//
 
  var generateSalt = function() {
-   return crypto.randomBytes(128).toString('hex');
+     var salt = crypto.randomBytes(128).toString('hex');
+     return salt;
  }
 
  var md5 = function(str) {
@@ -145,6 +190,14 @@ exports.Login = function(user, password, callback, res) {
 var validatePassword = function(plainPass, hashedPass, callback)
 {
   var salt = hashedPass.substr(0, 10);
+  console.log("Salt:" + salt);
   var validHash = salt + md5(plainPass + salt);
+  console.log("validHash:" + validHash);
   callback(null, hashedPass === validHash);
 }
+/*
+var createHashPassword = function(plainPass) {
+    var salt = generateSalt().substr(0,10);
+    var validHash = salt + md5(plainPass + salt);
+    return validHash;
+}*/

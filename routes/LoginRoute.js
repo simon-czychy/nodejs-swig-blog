@@ -27,4 +27,19 @@ router.post('/', urlencodedParser, function (req,res,next) {
   }, res );
 });
 
+router.get('/', function(req, res, next) {
+
+  if(req.cookies.userid && req.cookies.email) {
+    return res.redirect("/");
+  }
+  else {
+    return res.render('login',  {
+      title: 'Blog Sausage',
+      showLogin: false
+    });
+  }
+
+
+});
+
 module.exports = router;

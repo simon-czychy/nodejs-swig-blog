@@ -14,14 +14,13 @@ router.get('/', function(req, res, next) {
   }
   else {
     loggedin = false;
+    return res.render('admin',  {
+      title: 'Blog Sausage',
+      message: 'Here you can find some awesome Blog posts!',
+      isloggedin: loggedin,
+      isAdmin: isAdmin
+    });
   }
-
-  res.render('index',  {
-    title: 'Blog Sausage',
-    message: 'Here you can find some awesome Blog posts!',
-    isloggedin: loggedin
-  });
-
 });
 
 function isCookieValid(res, userid, email) {
@@ -37,11 +36,15 @@ function isCookieValid(res, userid, email) {
         else {
           var row = result[0];
           if(result.length == 1) {
+            if(row["level"] != "admin"){
+                return res.redirect("/login");
+            }
             if(row !== "" && row !== null && row !== "undefined") {
               loggedin = true;
-              res.render('admin',  {
+              return res.render('admin',  {
                 title: 'Blog Sausage',
-                isloggedin: loggedin
+                isloggedin: loggedin,
+                isAdmin: isAdmin
               });
             }
           }

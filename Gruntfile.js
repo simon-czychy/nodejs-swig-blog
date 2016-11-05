@@ -9,9 +9,12 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            css: {
+            scss: {
                 files: 'scss/partials/*.scss',
-                tasks: ['default']
+                tasks: ['default'],
+                options: {
+                    forever: true
+                }
             }
         },
         concat: {
