@@ -19,29 +19,22 @@ router.get('/', function(req, res, next) {
     loggedin = false;
     res.render('index',  {
       title: 'Blog Sausage',
-      message: 'Here you can find some awesome Blog posts!',
       isloggedin: loggedin
     });
   }
 });
 
-/* GET admin page. */
-router.get('/article/add', function(req, res, next) {
 
-  if(req.cookies.userid && req.cookies.email) {
-    isCookieValid(res, req.cookies.userid, req.cookies.email, 'admin/article/add',  {
-      title: 'Blog Sausage',
-      isloggedin: loggedin,
-      host: req.headers.host
-    });
+router.post('/addarticle', function(req, res, next) {
+  if(loggedin) {
+    rdb.table("article").insert({
+      "title": req.body.title,
+      "content": req.body.content
+    }).run(connection);
+    res.send("added-article");
   }
   else {
-    loggedin = false;
-    res.render('index',  {
-      title: 'Blog Sausage',
-      message: 'Here you can find some awesome Blog posts!',
-      isloggedin: loggedin
-    });
+    res.send("not-loggedin");
   }
 });
 
@@ -58,9 +51,12 @@ function isCookieValid(res, userid, email, view, options) {
         else {
           var row = result[0];
           if(result.length == 1) {
+            if(row["level"] != "admin"){
+                return res.redirect("/login");
+            }
             if(row !== "" && row !== null && row !== "undefined") {
               loggedin = true;
-              res.render(view, options);
+              return res.render(view, options);
             }
           }
         }

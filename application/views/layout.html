@@ -14,10 +14,18 @@
     <script>tinymce.init({ selector:'textarea' });</script>
 </head>
 <body>
+
 {% block header %}
 {% endblock %}
+
+    {% include 'partials/header.html' with {
+        'title': title,
+        'isloggedin': isloggedin,
+        'isAdmin': isAdmin,
+        'showLoginButton': showLoginButton
+    }  only %}
+
 {% block content %}
-{{ host }}
 {% endblock %}
 {% block footer %}
 {% endblock %}

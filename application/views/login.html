@@ -1,1 +1,25 @@
 {% extends 'layout.html' %}
+
+{% block header %}
+
+{% include 'partials/header.html' with {
+    'title': title,
+    'isloggedin': isloggedin,
+    'isAdmin': isAdmin,
+    'showLoginButton' : false
+}  only %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="main">
+    <div class="loginform">
+        <input class="item" type="email" name="name" value="" placeholder="E-Mail">
+        <input class="item" type="password" name="name" value="" placeholder="Password">
+        <button class="item" type="button" name="button">Login</button>
+    </div>
+
+</div>
+
+{% endblock %}

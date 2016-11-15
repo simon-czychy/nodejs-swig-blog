@@ -1,0 +1,39 @@
+.content {
+  margin-top:50px;
+
+  .error {
+    background: lightgrey;
+    border-radius: 10px;
+    padding: 20px 40px;
+  }
+
+  .message {
+    margin-bottom: 100px;
+  }
+
+  .hidden {
+    display: none;
+  }
+}
+
+.button {
+  padding: 8px 20px;
+  border: 2px solid black;
+  color: black;
+  text-decoration: none;
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+  background: transparent;
+  font-weight: 400;
+  margin-top: 25px;
+
+  &:hover {
+    background: black;
+    color: white;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+  }
+}

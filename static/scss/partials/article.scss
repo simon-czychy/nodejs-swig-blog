@@ -1,4 +1,9 @@
-.body {
+.content {
+  .add-article {
+    input {
+      margin-bottom: 25px;
+    }
+  }
   .articles {
     .article {
       font-family: 'Lora', serif;

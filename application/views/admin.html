@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% include 'partials/header.html' with {
+    'title': title,
+    'isloggedin': isloggedin
+}  only %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container body">
+    Adminbereich!
+</div>
+
+{% endblock %}

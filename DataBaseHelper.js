@@ -7,17 +7,5 @@ module.exports = {
             connection = conn;
         });
     },
-    
-    insert: function(table, data) {
-        rdb.table(table).insert(data).run(connection, function(err, result) {
-            if(err) throw err;
-        })
-    },
-
-    deleteAll: function(table) {
-        rdb.table(table).delete().run(connection);
-    },
     rdb: rdb
 };
-
-

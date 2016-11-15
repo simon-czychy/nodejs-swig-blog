@@ -1,29 +1,47 @@
-<div class="new--Artikel">
 
+
+
+
+{% if isAdmin == true  %}
+<div class="col-md-8 add-article">
+    <input type="text" name="title" value="" placeholder="Title">
+    <textarea></textarea>
+    <a id="add--article" class="button pull-right">Add</a>
 </div>
+{% endif %}
 
 
 
 <div class="articles">
 
-  <div class="col-md-8">
-      <input type="text" name="title" value="" placeholder="Title">
-      <textarea></textarea>
-      <a href="admin/article/add" class="button pull-right">Add</a>
-  </div>
+  {% for article in articles %}
+      {% set variables = {
+        "title": article.title,
+        "content": article.content,
+        "subtitle": article.title,
+        "author": {
+          "name": article.author,
+          "avatar": {
+            "image": 'article.author.image',
+            "alt": 'Bild von ' + article.author
+          }
+        },
+        "desc": "article.author.desc"
+      }%}
+      {% include 'article.html' with variables only %}
+  {% endfor %}
 
-
-    {% set name = 'Simon Czychy' %}
+    {% set name = "Simon Czychy" %}
     {% include 'article.html' with {
-        'title': 'Lorem ipsum dolor sit amet',
+        'title': article.title,
         'subtitle': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr',
         'content': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
         'author' : {
-        'name': name,
-        'avatar': {
-            'image': 'static/img/avatar.jpg',
-            'alt': 'Bild von ' + name ,
-        },
+          'name': name,
+          'avatar': {
+              'image': 'static/img/avatar.jpg',
+              'alt': 'Bild von ' + name ,
+          },
         'desc': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
         }
     } only %}

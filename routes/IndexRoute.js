@@ -1,26 +1,25 @@
 var express = require('express');
 var router = express.Router();
-loggedin = false;
 var rdbHelper = require('../DataBaseHelper');
 var rdb = require("rethinkdb");
-
-
-
-
+var articles;
 
 rdbHelper.connect();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
+  getArticles();
   if(req.cookies.userid && req.cookies.email) {
     checkCookie(res, req.cookies.userid, req.cookies.email);
   }
   else {
     loggedin = false;
-    res.render('index',  {
+    return res.render('index',  {
       title: 'Blog Sausage',
-      isloggedin: loggedin
+      isloggedin: false,
+      showLoginButton: true,
+      isAdmin: false,
+      articles: this.articles
     });
   }
 
@@ -28,7 +27,7 @@ router.get('/', function(req, res, next) {
 });
 
 function checkCookie(res, userid, email) {
-  rdb.table("users").filter(rdb.row("id").eq(userid)).filter(rdb.row("email").eq(email)).run(connection, function(err, cursor) {
+  rdb.table("users").filter(rdb.row("id").eq(userid)).filter(rdb.row("email").eq(email)).pluck('email', 'level').run(connection, function(err, cursor) {
     if(err) {
       throw err;
     }
@@ -42,10 +41,14 @@ function checkCookie(res, userid, email) {
           if(result.length == 1) {
             if(row !== "" && row !== null && row !== "undefined") {
               loggedin = true;
-              res.render('index',  {
+              isAdmin = false;
+              if(row["level"] == "admin") {
+                  isAdmin = true;
+              }
+              return res.render('index',  {
                 title: 'Blog Sausage',
-                message: 'Here you can find some awesome Blog posts!',
-                isloggedin: loggedin
+                isloggedin: loggedin,
+                isAdmin: isAdmin
               });
             }
           }
@@ -54,5 +57,24 @@ function checkCookie(res, userid, email) {
     }
   });
 }
+
+function getArticles() {
+  rdb.table("article").run(connection, function(err, cursor) {
+    if(err) {
+      throw err;
+    }
+    else {
+      cursor.toArray(function(err, result) {
+        if(err) {
+          throw err;
+        }
+        else {
+          this.articles = result;
+        }
+      });
+    }
+  });
+}
+
 
 module.exports = router;

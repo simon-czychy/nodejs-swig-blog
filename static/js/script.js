@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var btnLogin = $(".btn-login");
+    var btnLogin = $(".button#login");
     var emailinput = $("input.username");
     var passwordinput = $("input.password");
     var inputsVisible = false;
@@ -45,7 +45,7 @@ $(document).ready(function() {
     });
 
 
-    var btnLogout = $(".btn-logout");
+    var btnLogout = $(".button#logout");
     btnLogout.on("click", function() {
             $.ajax({
                 url: "/logout",
@@ -53,12 +53,34 @@ $(document).ready(function() {
                 type: "POST",
                 success: function (result) {
                     window.location = "/";
-                },
-                error: function (err, status, thrown) {
-
                 }
             });
 
+    });
+
+
+    var btnAddArticle = $("#add--article");
+    btnAddArticle.on("click", function() {
+      tinyMCE.triggerSave(false, true);
+      var articleTitle = $('input[name=title]').val();
+      var editorContent = tinyMCE.activeEditor.getContent();
+      $.ajax({
+          url: "/admin/addarticle",
+          data: { "title": articleTitle, "content": editorContent},
+          type: "POST",
+          success: function (result) {
+            if (result == "article-added"){
+              window.location = "/";
+            }
+            else if (result == "not-loggedin") {
+              if($('.alertbox').length == 0){
+                  showMessage("You cannot add articles as a guest. Please log in.", "danger");
+              }
+            }
+          },
+          error: function (err, status, thrown) {
+          }
+      });
     });
 });
 
@@ -83,4 +105,9 @@ function showMessage(status, type) {
   $("#"+id).fadeTo(2000, 500).slideUp(500, function(){
     $("#"+id).slideUp(500);
   });
+}
+
+
+function addArticle() {
+
 }

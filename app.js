@@ -1,6 +1,8 @@
 var express = require('express');
-var cons = require('consolidate');
+var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser');
+
+var cons = require('consolidate');
 
 
 // Default Route for Index
@@ -13,6 +15,7 @@ var ArticleRoute = require('./routes/ArticleRoute');
 
 //create express instance
 var app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 //set port
 app.set('port', 80);
