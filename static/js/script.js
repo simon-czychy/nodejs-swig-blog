@@ -62,14 +62,21 @@ $(document).ready(function() {
     var btnAddArticle = $("#add--article");
     btnAddArticle.on("click", function() {
       tinyMCE.triggerSave(false, true);
-      var articleTitle = $('input[name=title]').val();
-      var editorContent = tinyMCE.activeEditor.getContent();
+
+
+      var tags = $('input[name=tags]').val();
+
       $.ajax({
           url: "/admin/addarticle",
-          data: { "title": articleTitle, "content": editorContent},
+          data: {
+            "title": $('input[name=title]').val(),
+            "subtitle": $('input[name=subtitle]').val(),
+            "content": tinyMCE.activeEditor.getContent(),
+            "tags": tags
+          },
           type: "POST",
           success: function (result) {
-            if (result == "article-added"){
+            if (result == "added-article"){
               window.location = "/";
             }
             else if (result == "not-loggedin") {
@@ -81,6 +88,7 @@ $(document).ready(function() {
           error: function (err, status, thrown) {
           }
       });
+
     });
 });
 

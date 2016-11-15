@@ -16,5 +16,10 @@
 </div>
 <div class="col-md-4 tags">
     <div class="col-md-12"><div class="title">Tags:</div></div>
-    <div class="col-md-12"><span class="tag">#win10</span><span class="tag">#linux</span><span class="tag">#ios10</span><span class="tag">#aosp</span></div>
+    <div class="col-md-12">
+      {% for tag in tags %}
+        <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-12"></div>
 </div>

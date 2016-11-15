@@ -27,10 +27,10 @@ router.get('/', function(req, res, next) {
 
 router.post('/addarticle', function(req, res, next) {
   if(loggedin) {
-    rdb.table("article").insert({
-      "title": req.body.title,
-      "content": req.body.content
-    }).run(connection);
+    console.log(req.body);
+    var tags = req.body.tags;
+    req.body.tags = tags.split(" ");
+    rdb.table("article").insert(req.body).run(connection);
     res.send("added-article");
   }
   else {
