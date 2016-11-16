@@ -8,7 +8,21 @@ router.post('/', urlencodedParser, function (req,res,next) {
     if(req.cookies.userid && req.cookies.email) {
       res.clearCookie("userid");
       res.clearCookie("email");
-      res.end();
+      res.redirect("/");
+    }
+    else {
+      res.redirect("/");
+    }
+});
+
+router.get('/', urlencodedParser, function (req,res) {
+    if(req.cookies.userid && req.cookies.email) {
+      res.clearCookie("userid");
+      res.clearCookie("email");
+      res.redirect("/");
+    }
+    else {
+      res.redirect("/");
     }
 });
 
