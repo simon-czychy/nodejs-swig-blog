@@ -82,7 +82,7 @@ function release(connection) {
 
 
 
-exports.Login = function(user, password, callback, res) {
+exports.manualLogin = function(user, password, res, callback) {
   console.log("Login: %s", user);
 
   onConnection(function(err,connection) {
@@ -127,48 +127,49 @@ exports.Login = function(user, password, callback, res) {
 }
 
 
-/*
-exports.getUserLevel = function(user, callback, res) {
+exports.autoLogin = function(userid, email, res, callback) {
+  console.log("AutoLogin: %s", email);
 
   onConnection(function(err,connection) {
     if(err) {
-      console.log("[ERROR][USERLEVEL]: %s:%s\n%s", err.name, err.msg, err.message);
+      console.log("[ERROR][autoLogin]: %s:%s\n%s", err.name, err.msg, err.message);
       callback(null);
       return;
     }
 
-    rdb.table("users").filter(rdb.row("level")).run(connection, function(err, cursor) {
+    rdb.table("users").filter(rdb.row("email").eq(email)).limit(1).run(connection, function(err, cursor) {
       if(err) {
-        console.log("[ERROR][USERLEVEL]: %s:%s\n%s", err.name, err.msg, err.message);
+        console.log("[ERROR][autoLogin]: %s:%s\n%s", err.name, err.msg, err.message);
         callback(null);
       }
       else {
-        var statusMessage = "unkown-error";
+        var statusMessage = undefined;
         cursor.next(function(err, row) {
           if(err) {
-            console.log("[ERROR][USERLEVEL][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+            console.log("[ERROR][autoLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
             release(connection);
+            statusMessage = "invalid-session";
           }
           else {
-              validatePassword(password, row.password, function(err, passCorrect) {
-              if(passCorrect) {
+              validateCookie(userid, row.id, function(err, isCookieValid) {
+              if(isCookieValid) {
                 callback(null, row);
-                statusMessage = "login-successful";
+                statusMessage = "auto-login-successful";
               }
               else {
-
-                callback('login-failed');
-                statusMessage = "bad-pass";
+                callback(null);
+                statusMessage = "auto-login-failed";
               }
               release(connection);
             });
           }
-          res.send(statusMessage);
         });
       }
     });
   });
-}*/
+}
+
+
 
 //==================================== PRIVATE METHODS ===================================//
 
@@ -190,11 +191,14 @@ exports.getUserLevel = function(user, callback, res) {
 var validatePassword = function(plainPass, hashedPass, callback)
 {
   var salt = hashedPass.substr(0, 10);
-  console.log("Salt:" + salt);
   var validHash = salt + md5(plainPass + salt);
-  console.log("validHash:" + validHash);
   callback(null, hashedPass === validHash);
 }
+
+var validateCookie = function(userid, rowuserid, callback) {
+  callback(null, userid === rowuserid)
+}
+
 /*
 var createHashPassword = function(plainPass) {
     var salt = generateSalt().substr(0,10);
