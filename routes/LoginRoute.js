@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var rdb = require("rethinkdb");
 var Webuser  = require("../application/models/Webuser");
 var swig  = require("../application/models/SwigRenderer");
 var config = require("../application/modules/config").Config;
@@ -19,7 +18,7 @@ router.post('/', urlencodedParser, function (req,res,next) {
   }
   Webuser.manualLogin(req.body.username, req.body.password, res, function(connection, user) {
     if(!user || typeof user == "undefined") {
-      res.send("Something wrent wrong!");
+
     }
     else {
         res.cookie("userid", user.id, 1, { domain: config.host, maxAge: 3600});
@@ -33,7 +32,7 @@ router.get('/', function(req, res, next) {
     return res.redirect("/");
   }
   else {
-    swig.RenderIndex(res);
+    swig.Render(res, "login");
   }
 });
 

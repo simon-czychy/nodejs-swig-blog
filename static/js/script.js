@@ -67,7 +67,7 @@ $(document).ready(function() {
       var tags = $('input[name=tags]').val();
 
       $.ajax({
-          url: "/admin/addarticle",
+          url: "/article/add",
           data: {
             "title": $('input[name=title]').val(),
             "subtitle": $('input[name=subtitle]').val(),
@@ -76,13 +76,23 @@ $(document).ready(function() {
           },
           type: "POST",
           success: function (result) {
-            if (result == "added-article"){
-              window.location = "/";
+            if (result == "article-added"){
+                if($('.alertbox').length == 0) {
+                    showMessage("Article succesful added.", "success");
+                }
+                window.setTimeout(function() {
+                    window.location = "/";
+                }, 5000);
             }
             else if (result == "not-loggedin") {
               if($('.alertbox').length == 0){
                   showMessage("You cannot add articles as a guest. Please log in.", "danger");
               }
+            }
+            else {
+                if($('.alertbox').length == 0){
+                    showMessage("Something went wrong! Check the logs.", "danger");
+                }
             }
           },
           error: function (err, status, thrown) {
@@ -109,7 +119,7 @@ function scaleElement(element) {
 function showMessage(status, type) {
   var id = type + '-alert';
   var element = '<div class="alertbox"><div class="alert alert-' + type + '" id="' + id + '"><button type="button" class="close" data-dismiss="alert">x</button><strong>Oops! </strong>User not found. Try again.</div></div>';
-  $(element).insertBefore(".body");
+  $(element).insertBefore(".container.content");
   $("#"+id).fadeTo(2000, 500).slideUp(500, function(){
     $("#"+id).slideUp(500);
   });

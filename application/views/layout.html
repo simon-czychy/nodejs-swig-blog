@@ -1,3 +1,5 @@
+{% set title = "Blog Sausage" %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,15 +18,13 @@
 <body>
 
 {% block header %}
+  {% include 'partials/header.html' with {
+      'title': title,
+      'isloggedin': isloggedin,
+      'isAdmin': isAdmin,
+      'showLoginButton': showLoginButton
+  }  only %}
 {% endblock %}
-
-    {% include 'partials/header.html' with {
-        'title': title,
-        'isloggedin': isloggedin,
-        'isAdmin': isAdmin,
-        'showLoginButton': showLoginButton
-    }  only %}
-
 {% block content %}
 {% endblock %}
 {% block footer %}

@@ -1,20 +1,19 @@
 var express = require('express');
 var router = express.Router();
-var rdbHelper = require('../DataBaseHelper');
+
 var rdb = require("rethinkdb");
 var Webuser  = require("../application/models/Webuser");
+var Article  = require("../application/models/Article");
 var articles;
-var swig = require("../application/models/SwigRenderer");
 
-rdbHelper.connect();
+var swig = require("../application/models/SwigRenderer");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   getArticles();
+
   if(req.cookies.userid && req.cookies.email) {
     Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function(connection, user) {
-      var loggedin = false;
-      var isAdmin = false;
       if(!user || typeof user == "undefined") {
         swig.RenderIndex(res);
       }
@@ -29,20 +28,11 @@ router.get('/', function(req, res, next) {
 });
 
 function getArticles() {
-  rdb.table("article").run(connection, function(err, cursor) {
-    if(err) {
-      throw err;
-    }
-    else {
-      cursor.toArray(function(err, result) {
-        if(err) {
-          throw err;
-        }
-        else {
-          this.articles = result;
-        }
-      });
-    }
+  Article.getArticles(function (err, articles) {
+
+      //this.articles = JSON.stringify(articles);
+    console.log("XXXXXXXXXXXXXXXXXXXX");
+      console.log(JSON.stringify(articles));
   });
 }
 

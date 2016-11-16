@@ -37,3 +37,23 @@
     text-decoration: none;
   }
 }
+
+input {
+  background: transparent;
+  font-weight: 400;
+  margin-top: 20px;
+  border: 2px solid black;
+  padding: 9px 0px;
+  text-align: center;
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+  font-weight: 600;
+
+  &:focus {
+    background: black;
+    color: white;
+    font-weight: 600;
+  }
+}

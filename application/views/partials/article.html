@@ -5,7 +5,8 @@
     <div class="container-fluid author">
         <div class="row">
             <div class="col-md-3">
-                <img src="{{ author.avatar.image }}" alt="{{ author.avatar.alt }}">
+                {{ author.avatar }}
+                <img src="{{ author.avatar }}" alt="{{ author.name }}">
             </div>
             <div class="col-md-9">
                 <p>Über {{ author.name }}:</p>

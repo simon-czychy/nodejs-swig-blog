@@ -1,91 +1,15 @@
 var crypto = require('crypto'),
-    dbConfig = require('../modules/config').dbConfig,
     rdb = require('rethinkdb'),
-    connectionPooling = false,
-    connectionPool = null,
-    config = require("../modules/config").Config;
+    config = require("../modules/config").Config,
+    DBConnection = require("../../DataBaseConnector");
 
-
-//if pool connection is configured, use it
-if (typeof dbConfig.pool === 'object') {
-  var pool = require('generic-pool');
-  connectionPooling = true;
-
-  connectionPool = pool.Pool({
-    name: 'rethinkdb',
-    max : dbConfig.pool.max || 1000,
-    min : dbConfig.pool.min || 2,
-    log : dbConfig.pool.log || true,
-    idleTimeoutMillis : dbConfig.pool.idleTimeoutMillis || 1 * 60 * 1000,
-    reapIntervalMillis: dbConfig.pool.reapIntervalMillis || 30 * 1000,
-
-    create: function(callback) {
-      rdb.connect({host: dbConfig.host, port: dbConfig.port}, function(err, connection) {
-          if(err) {
-            var errMsg = util.format("Failed connecting to RethinkDB instance on {host: %s, port: %s}", dbConfig.host, dbConfig.port);
-            console.log("[ERROR]: " + errMsg);
-            return callback(new Error(errMsg));
-          }
-          connection._id = Math.floor(Math.random()*10001);
-          connection.use(dbConfig.db);
-          console.log("[DEBUG]: Connection created: %s", connection._id);
-          callback(null, connection);
-      });
-    },
-
-    destroy: function(connection) {
-      console.log("[DEBUG]: Connection closed: %s", connection._id);
-      connection.close();
-    }
-  });
-
-}
-
-
-function onConnection(callback) {
-  if(connectionPooling) {
-    connectionPool.acquire(function(err, connection) {
-      if(err) {
-        callback(err);
-      }
-      else {
-        console.log("[INFO]: Pooled connection: %s", connection._id);
-        callback(null, connection);
-      }
-    });
-  }
-  else {
-    rdb.connect({host: dbConfig.host, port: dbConfig.port}, function(err, connection) {
-      if(err) {
-        console.log("[ERROR]: Cannot connect to RethinkDB database: %s on port %s", dbConfig['host'], dbConfig['port']);
-        callback(err);
-      }
-      else {
-        connection._id = Math.floor(Math.random()*10001);
-        connection.use(dbConfig.db);
-        console.log("[DEBUG]: Connection established. ID: %s", connection._id);
-        callback(null, connection);
-      }
-    });
-  }
-}
-
-function release(connection) {
-  console.log("[DEBUG]: Disconnecting connection: %s", connection._id);
-  if(connectionPooling) {
-    connectionPool.release(connection);
-  }
-  else {
-    connection.close();
-  }
-}
 
 
 
 exports.manualLogin = function(user, password, res, callback) {
   console.log("Login: %s", user);
 
-  onConnection(function(err,connection) {
+  DBConnection.onConnection(function(err,connection) {
     if(err) {
       console.log("[ERROR][manualLogin]: %s:%s\n%s", err.name, err.msg, err.message);
       callback(null);
@@ -102,7 +26,7 @@ exports.manualLogin = function(user, password, res, callback) {
         cursor.next(function(err, row) {
           if(err) {
             console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
-            release(connection);
+            DBConnection.release(connection);
             statusMessage = "user-not-found";
           }
           else {
@@ -112,11 +36,10 @@ exports.manualLogin = function(user, password, res, callback) {
                 statusMessage = "login-successful";
               }
               else {
-
                 callback('login-failed');
                 statusMessage = "bad-pass";
               }
-              release(connection);
+                DBConnection.release(connection);
             });
           }
           res.send(statusMessage);
@@ -130,7 +53,7 @@ exports.manualLogin = function(user, password, res, callback) {
 exports.autoLogin = function(userid, email, res, callback) {
   console.log("AutoLogin: %s", email);
 
-  onConnection(function(err,connection) {
+  DBConnection.onConnection(function(err,connection) {
     if(err) {
       console.log("[ERROR][autoLogin]: %s:%s\n%s", err.name, err.msg, err.message);
       callback(null);
@@ -147,7 +70,7 @@ exports.autoLogin = function(userid, email, res, callback) {
         cursor.next(function(err, row) {
           if(err) {
             console.log("[ERROR][autoLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
-            release(connection);
+            DBConnection.release(connection);
             statusMessage = "invalid-session";
           }
           else {
@@ -160,8 +83,39 @@ exports.autoLogin = function(userid, email, res, callback) {
                 callback(null);
                 statusMessage = "auto-login-failed";
               }
-              release(connection);
+                DBConnection.release(connection);
             });
+          }
+        });
+      }
+    });
+  });
+}
+
+exports.getUserByID = function (id, callback) {
+  console.log("GetUserByID: %s", id);
+
+  DBConnection.onConnection(function(err,connection) {
+    if(err) {
+      console.log("[ERROR][GETUSERBYID]: %s:%s\n%s", err.name, err.msg, err.message);
+      callback(null);
+      return;
+    }
+
+    rdb.table("users").filter(rdb.row("id").eq(id)).limit(1).pluck("name", "desc", "avatar").run(connection, function(err, cursor) {
+      if(err) {
+        console.log("[ERROR][GETUSERBYID]: %s:%s\n%s", err.name, err.msg, err.message);
+        callback(null);
+      }
+      else {
+        cursor.next(function(err, user) {
+          if(err) {
+            console.log("[ERROR][GETUSERBYID][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+            callback(null);
+            DBConnection.release(connection);
+          }
+          else {
+            callback(null, user)
           }
         });
       }
@@ -173,16 +127,18 @@ exports.autoLogin = function(userid, email, res, callback) {
 
 //==================================== PRIVATE METHODS ===================================//
 
- var generateSalt = function() {
+var generateSalt = function()
+{
      var salt = crypto.randomBytes(128).toString('hex');
      return salt;
- }
+}
 
- var md5 = function(str) {
+var md5 = function(str)
+{
    return crypto.createHash('md5').update(str).digest('hex');
- }
+}
 
- var saltAndHash = function(pass, callback)
+var saltAndHash = function(pass, callback)
 {
   var salt = generateSalt();
   callback(salt + md5(pass + salt));
@@ -195,7 +151,8 @@ var validatePassword = function(plainPass, hashedPass, callback)
   callback(null, hashedPass === validHash);
 }
 
-var validateCookie = function(userid, rowuserid, callback) {
+var validateCookie = function(userid, rowuserid, callback)
+{
   callback(null, userid === rowuserid)
 }
 

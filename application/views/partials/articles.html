@@ -15,22 +15,16 @@
 
 
 <div class="articles">
-
   {% for article in articles %}
       {% set variables = {
         "title": article.title,
         "content": article.content,
         "subtitle": article.title,
-        "author": {
-          "name": article.author,
-          "avatar": {
-            "image": 'article.author.image',
-            "alt": 'Bild von ' + article.author
-          }
-        },
-        "desc": "article.author.desc",
+        "author": article.author,
+        "desc": article.author.desc,
         "tags": article.tags
       }%}
+    {{ article.author|json_encode() }}
       {% include 'article.html' with variables only %}
   {% endfor %}
 
