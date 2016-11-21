@@ -5,6 +5,7 @@ var DBConnection = require("../DataBaseConnector");
 var swig  = require("../application/models/SwigRenderer");
 var Webuser  = require("../application/models/Webuser");
 var Article = require("../application/models/Article");
+var moment = require("moment")
 
 
 /* GET article page. */
@@ -32,6 +33,8 @@ router.post('/add', function(req, res) {
           var tags = req.body.tags;
           req.body.tags = tags.split(" ");
           req.body.author = req.cookies.userid;
+          req.body.releaseDate = moment().format("DD.MM.YYYY hh:mm:ss");
+
           Article.addArticle(res, req.body, function(connection, info) {
             if(!info || typeof info == "undefined") {
               res.send("error");

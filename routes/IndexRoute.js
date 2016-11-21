@@ -29,10 +29,7 @@ router.get('/', function(req, res, next) {
 
 function getArticles() {
   Article.getArticles(function (err, articles) {
-
-      //this.articles = JSON.stringify(articles);
-    console.log("XXXXXXXXXXXXXXXXXXXX");
-      console.log(JSON.stringify(articles));
+    this.articles = articles;
   });
 }
 

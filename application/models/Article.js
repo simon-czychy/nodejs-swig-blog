@@ -4,8 +4,8 @@ var rdb = require('rethinkdb'),
 
 
 
-exports.addArticle = function(res, content, callback) {
-    console.log("AddArticle: %s", content.title);
+exports.addArticle = function(res, article, callback) {
+    console.log("AddArticle: %s", article.title);
 
     DBConnection.onConnection(function(err,connection) {
         if(err) {
@@ -14,7 +14,7 @@ exports.addArticle = function(res, content, callback) {
             return;
         }
 
-        rdb.table("article").insert(content).run(connection, function(err, info) {
+        rdb.table("article").insert(article).run(connection, function(err, info) {
             if(err) {
                 console.log("[ERROR][AddArticle]: %s:%s\n%s", err.name, err.msg, err.message);
                 callback(null);
@@ -51,7 +51,6 @@ exports.getArticles = function (callback) {
                         callback(null);
                     }
                     else {
-                        console.log(articles);
                         callback(null, articles);
                     }
                 });

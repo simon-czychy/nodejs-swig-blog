@@ -1,11 +1,13 @@
+{% set author = article.author[0] %}
+
+
 <div class="article col-md-8">
-    <h2 class="title">{{ title|raw }}</h2>
-    <h4 class="subtitle"><p>{{ subtitle|raw }}</p></h4>
-    <p class="content">{{ content|raw }}</p>
+    <h4 class="subtitle"><p>{{ article.subtitle|raw }}</p></h4>
+    <h2 class="title"><a href="{{ article.title|lower|replace(' ', '-', 'g') }}">{{ article.title|raw }}</a></h2>
+    <div class="content">{{ article.content|raw }}</div>
     <div class="container-fluid author">
         <div class="row">
             <div class="col-md-3">
-                {{ author.avatar }}
                 <img src="{{ author.avatar }}" alt="{{ author.name }}">
             </div>
             <div class="col-md-9">
@@ -18,9 +20,10 @@
 <div class="col-md-4 tags">
     <div class="col-md-12"><div class="title">Tags:</div></div>
     <div class="col-md-12">
-      {% for tag in tags %}
+      {% for tag in article.tags %}
         <span class="tag">{{ tag }}</span>
       {% endfor %}
     </div>
-    <div class="col-md-12"></div>
+    <div class="col-md-12 release--date">Veröffentlicht am: {{ article.releaseDate }}</div>
+    <div class="col-md-12 author">Author: <a href="author/{{ author.name|lower|replace(' ','-','g') }}">{{ author.name }}</a></div>
 </div>

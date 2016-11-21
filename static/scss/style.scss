@@ -9,10 +9,10 @@
     .article {
       font-family: 'Lora', serif;
       .title {
-        padding-bottom: 10px;
+
       }
       .subtitle {
-        padding-bottom: 5px;
+        margin-top: 50px;
       }
       .content {
         font-size: 16px;
@@ -32,7 +32,9 @@
         border-bottom: 1px solid black;
         margin-bottom: 10px;
       }
-
+      .author {
+        margin-top: 5px;
+      }
       span.tag {
         background-color: lightgrey;
         border: 1px solid lightgrey;
@@ -50,6 +52,10 @@
           color: dodgerblue;
           cursor: pointer;
         }
+      }
+
+      .release--date {
+        margin-top: 25px;
       }
     }
   }
