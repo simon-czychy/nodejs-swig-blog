@@ -98,4 +98,4 @@ jspm_packages
 .node_repl_history
 
 /nbproject/*
-rethinkdb_data/tmp/
+rethinkdb_data/*
