@@ -61,8 +61,8 @@ logs
 *.log
 npm-debug.log*
 
-#MongoDB Data
-data/
+#RethinkDB Data
+rethinkdb_data/
 
 # Runtime data
 pids
@@ -98,4 +98,3 @@ jspm_packages
 .node_repl_history
 
 /nbproject/*
-rethinkdb_data/*
