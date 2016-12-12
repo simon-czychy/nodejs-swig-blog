@@ -1,11 +1,18 @@
 {% set author = article.author[0] %}
+{% set titleHref = article.title|lower|replace(' ', '-', 'g') %}
+{% set uniqueArticleID = titleHref %}
 
-
-<div class="article col-md-8">
+<div id="{{ uniqueArticleID }}" class="article col-md-8">
     <h4 class="subtitle"><p>{{ article.subtitle|raw }}</p></h4>
-    <h2 class="title"><a href="{{ article.title|lower|replace(' ', '-', 'g') }}">{{ article.title|raw }}</a></h2>
-    <div class="content">{{ article.content|raw }}</div>
-    <div class="container-fluid author">
+    <h2 class="title"><a href="{{ titleHref }}">{{ article.title|raw }}</a></h2>
+    <div class="article--content">{{ article.content|raw }}</div>
+    {% if isAdmin %}
+    <div class="moderation">
+        <a id="delete--article" class="button pull-right">Löschen</a>
+        <a class="button pull-right">Bearbeiten</a>
+    </div>
+    {% endif %}
+    <div class="author">
         <div class="row">
             <div class="col-md-3">
                 <img src="{{ author.avatar }}" alt="{{ author.name }}">
@@ -26,4 +33,5 @@
     </div>
     <div class="col-md-12 release--date">Veröffentlicht am: {{ article.releaseDate }}</div>
     <div class="col-md-12 author">Author: <a href="author/{{ author.name|lower|replace(' ','-','g') }}">{{ author.name }}</a></div>
+
 </div>

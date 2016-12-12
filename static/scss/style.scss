@@ -4,17 +4,23 @@
     input {
       margin-bottom: 25px;
     }
+    .button {
+      margin-top: 25px;
+    }
   }
   .articles {
     .article {
       font-family: 'Lora', serif;
-      .title {
-
+      .moderation {
+        margin-bottom: 80px;
+        a.button {
+          margin-left: 1%;
+        }
       }
       .subtitle {
         margin-top: 50px;
       }
-      .content {
+      .article--content {
         font-size: 16px;
       }
       .author {
@@ -61,6 +67,7 @@
   }
 }
 
+
 .content {
   margin-top:50px;
 
@@ -90,7 +97,6 @@
   transition: all .2s ease-in;
   background: transparent;
   font-weight: 400;
-  margin-top: 25px;
 
   &:hover {
     background: black;

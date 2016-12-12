@@ -34,6 +34,7 @@ router.post('/add', function(req, res) {
           req.body.tags = tags.split(" ");
           req.body.author = req.cookies.userid;
           req.body.releaseDate = moment().format("DD.MM.YYYY hh:mm:ss");
+          req.body.uniqueArticleID = req.body.title.replace(/\s+/g, '-').toLowerCase();
 
           Article.addArticle(res, req.body, function(connection, info) {
             if(!info || typeof info == "undefined") {

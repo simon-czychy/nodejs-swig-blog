@@ -100,6 +100,45 @@ $(document).ready(function() {
       });
 
     });
+
+
+
+    var btnDeleteArticle = $("#delete--article");
+    btnDeleteArticle.on("click", function() {
+
+        $.ajax({
+            url: "/article/delete",
+            data: {
+                "uniqueArticleID": $('a#articletitle').attr("href")
+            },
+            type: "POST",
+            success: function (result) {
+                if (result == "article-added"){
+                    if($('.alertbox').length == 0) {
+                        showMessage("Article succesful added.", "success");
+                    }
+                    window.setTimeout(function() {
+                        window.location = "/";
+                    }, 5000);
+                }
+                else if (result == "not-loggedin") {
+                    if($('.alertbox').length == 0){
+                        showMessage("You cannot add articles as a guest. Please log in.", "danger");
+                    }
+                }
+                else {
+                    if($('.alertbox').length == 0){
+                        showMessage("Something went wrong! Check the logs.", "danger");
+                    }
+                }
+            },
+            error: function (err, status, thrown) {
+            }
+        });
+
+    });
+
+
 });
 
 function fadeInInvisibleElement(element, time) {
@@ -118,14 +157,9 @@ function scaleElement(element) {
 
 function showMessage(status, type) {
   var id = type + '-alert';
-  var element = '<div class="alertbox"><div class="alert alert-' + type + '" id="' + id + '"><button type="button" class="close" data-dismiss="alert">x</button><strong>Oops! </strong>User not found. Try again.</div></div>';
+  var element = '<div class="alertbox"><div class="alert alert-' + type + '" id="' + id + '"><button type="button" class="close" data-dismiss="alert">x</button>' + status + '</div></div>';
   $(element).insertBefore(".container.content");
   $("#"+id).fadeTo(2000, 500).slideUp(500, function(){
     $("#"+id).slideUp(500);
   });
-}
-
-
-function addArticle() {
-
 }
