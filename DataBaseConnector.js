@@ -1,8 +1,8 @@
-var dbConfig = require('./application/modules/config').dbConfig,
+var dbConfig = require('./application/config/config').dbConfig,
     rdb = require('rethinkdb'),
     connectionPooling = false,
     connectionPool = null,
-    config = require("./application/modules/config").Config;
+    config = require("./application/config/config").Config;
 
 
 //if pool connection is configured, use it

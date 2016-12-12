@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var Webuser  = require("../application/models/Webuser");
 var swig  = require("../application/models/SwigRenderer");
-var config = require("../application/modules/config").Config;
+var config = require("../application/config/config").Config;
 
 const ERROR_USERNAME_NOT_FOUND = "Email not found!";
 const ERROR_USERNAME_INVALID = "Email invalid!";

@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 
   if(req.cookies.userid && req.cookies.email) {
     Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function(connection, user) {
-      if(!user || typeof user == "undefined") {
+      if(!user) {
         swig.RenderIndex(res);
       }
       else {

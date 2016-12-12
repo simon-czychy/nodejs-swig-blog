@@ -1,6 +1,6 @@
 var crypto = require('crypto'),
     rdb = require('rethinkdb'),
-    config = require("../modules/config").Config,
+    config = require("../config/config").Config,
     DBConnection = require("../../DataBaseConnector");
 
 
