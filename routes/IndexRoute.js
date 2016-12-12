@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 });
 
 function getArticles() {
-  Article.getArticles(function (err, articles) {
+  Article.getAll(function (err, articles) {
     this.articles = articles;
   });
 }

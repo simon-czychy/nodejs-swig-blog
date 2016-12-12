@@ -1,5 +1,6 @@
 "use strict";
-module.exports = class Article {
+var moment = require("moment");
+module.exports = class ArticleModel {
   constructor(title, subtitle, content, tags, authorId) {
     this.title = title;
     this.subtitle = subtitle;

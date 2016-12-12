@@ -3,9 +3,9 @@ global.express = require('express');
 global.router = express.Router();
 global.rdb = require("rethinkdb");
 global.Webuser  = require("./application/models/Webuser");
-global.Article  = require("./application/controller/Article");
-global.OArticle  = require("./application/models/OArticle");
-global.moment = require("moment");
+global.ArticleModel = require("./application/models/ArticleModel");
+var Article  = require("./application/controller/Article");
+global.Article = new Article();
 
 
 

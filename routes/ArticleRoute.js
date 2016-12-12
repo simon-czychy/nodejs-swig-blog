@@ -24,15 +24,15 @@ router.post('/add', function(req, res) {
           res.send("not-loggedin");
         }
         else {
-          var article = new OArticle(req.body.title, req.body.subtitle, req.body.content, req.body.tags, req.cookies.userid);
+          var article = new Article(req.body.title, req.body.subtitle, req.body.content, req.body.tags, req.cookies.userid);
           console.log(article);
-          Article.validateArticle(article, function(err, validated) {
+          Article.validate(article, function(err, validated) {
             if(!validated) {
               console.log("Could not validate article!");
               res.send("error");
             }
             else {
-              Article.addArticle(res, article, function(connection, info) {
+              Article.add(res, article, function(connection, info) {
                 if(!info) {
                   res.send("error");
                 }
@@ -58,7 +58,7 @@ router.post('/delete', function(req, res) {
           res.send("not-loggedin");
         }
         else {
-          Article.deleteArticle(req.body.id, function(connection, info) {
+          Article.delete(req.body.id, function(connection, info) {
             if(!info) {
               res.send("error");
             }

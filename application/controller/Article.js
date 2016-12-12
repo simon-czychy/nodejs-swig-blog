@@ -1,12 +1,16 @@
+"use strict";
 var rdb = require('rethinkdb'),
     config = require("../config/config").Config,
     DBConnection = require("../../DataBaseConnector");
 
+module.exports = class Article extends ArticleModel {
 
+  constructor(title, subtitle, content, tags, authorId){
+      super(title || "title", subtitle || "subtitle", content || "content", tags || "tags", authorId || "authorId");
+  }
 
-exports.addArticle = function(res, article, callback) {
+  add(article, callback) {
     console.log("AddArticle: %s", article.title);
-
     DBConnection.onConnection(function(err,connection) {
         if(err) {
             console.log("[ERROR][AddArticle]: %s:%s\n%s", err.name, err.msg, err.message);
@@ -24,9 +28,9 @@ exports.addArticle = function(res, article, callback) {
             }
         });
     });
-}
+  }
 
-exports.getArticles = function (callback) {
+  getAll(callback) {
     console.log("GetArticles");
 
     DBConnection.onConnection(function(err,connection) {
@@ -57,9 +61,9 @@ exports.getArticles = function (callback) {
             }
         });
     });
-}
+  }
 
-exports.deleteArticle = function(article, callback) {
+  delete(article, callback) {
     console.log("DeleteArticle: %s", article.title);
 
     DBConnection.onConnection(function(err,connection) {
@@ -79,13 +83,14 @@ exports.deleteArticle = function(article, callback) {
             }
         });
     });
-}
+  }
 
-exports.validateArticle = function(article, callback) {
-  if(article.title.length >= 5 && article.subtitle.length >= 5 && article.content.length >= 5){
-    callback(null, article);
+  validate(article, callback) {
+    if(article.title.length >= 5 && article.subtitle.length >= 5 && article.content.length >= 5){
+      callback(null, article);
+      return;
+    }
+    callback(null, false);
     return;
   }
-  callback(null, false);
-  return;
 }
