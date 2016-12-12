@@ -59,3 +59,24 @@ exports.getArticles = function (callback) {
     });
 }
 
+exports.deleteArticle = function(article, callback) {
+    console.log("DeleteArticle: %s", article.title);
+
+    DBConnection.onConnection(function(err,connection) {
+        if(err) {
+            console.log("[ERROR][DeleteArticle]: %s:%s\n%s", err.name, err.msg, err.message);
+            callback(null);
+            return;
+        }
+
+        rdb.table("article").filter({"id": article}).delete().run(connection, function(err, info) {
+            if(err) {
+                console.log("[ERROR][DeleteArticle]: %s:%s\n%s", err.name, err.msg, err.message);
+                callback(null);
+            }
+            else {
+                callback(null, info);
+            }
+        });
+    });
+}
