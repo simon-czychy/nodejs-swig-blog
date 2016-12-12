@@ -1,10 +1,12 @@
 {% if isAdmin == true  %}
 <div class="col-md-8 add-article">
-    <input type="text" name="title" value="" placeholder="Title">
-    <input type="text" name="subtitle" value="" placeholder="Subtitle">
-    <textarea></textarea>
-    <input type="text" name="tags" value="" placeholder="Tags">
-    <a id="add--article" class="button pull-right">Add</a>
+  <form class="addArticle" action="/article/add" method="post">
+      <input type="text" name="title" value="" placeholder="Title" pattern=".{3,}" required title="5 characters minimum">
+      <input type="text" name="subtitle" value="" placeholder="Subtitle" pattern=".{3,}" required title="5 characters minimum">
+      <textarea pattern=".{3,}" required title="5 characters minimum"></textarea>
+      <input type="text" name="tags" value="" placeholder="Tags" pattern=".{3,}" required title="3 characters minimum">
+      <a id="add--article" class="button pull-right">Add</a>
+    </form>
 </div>
 {% endif %}
 

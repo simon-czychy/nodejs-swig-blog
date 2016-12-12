@@ -1,10 +1,8 @@
-{% set author = article.author[0] %}
-{% set titleHref = article.title|lower|replace(' ', '-', 'g') %}
-{% set uniqueArticleID = titleHref %}
-
-<div id="{{ uniqueArticleID }}" class="article col-md-8">
+{% set author = article.authorId[0] %}
+{% set href = article.title|lower|replace(' ', '-', 'g') %}
+<div id="{{ href }}" class="article col-md-8">
     <h4 class="subtitle"><p>{{ article.subtitle|raw }}</p></h4>
-    <h2 class="title"><a href="{{ titleHref }}">{{ article.title|raw }}</a></h2>
+    <h2 class="title"><a href="{{ href }}">{{ article.title|raw }}</a></h2>
     <div class="article--content">{{ article.content|raw }}</div>
     {% if isAdmin %}
     <div class="moderation">

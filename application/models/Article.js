@@ -1,5 +1,5 @@
 var rdb = require('rethinkdb'),
-    config = require("../modules/config").Config,
+    config = require("../config/config").Config,
     DBConnection = require("../../DataBaseConnector");
 
 
@@ -37,7 +37,7 @@ exports.getArticles = function (callback) {
         }
         rdb.table('article').merge(function (article) {
             return {
-                author: rdb.table('users').getAll(article('author'), {index: 'id'}).pluck("name", "avatar","desc").coerceTo('ARRAY')
+                authorId: rdb.table('users').getAll(article('authorId'), {index: 'id'}).pluck("name", "avatar","desc").coerceTo('ARRAY')
             }
         }).run(connection, function(err, cursor) {
             if(err) {
@@ -79,4 +79,13 @@ exports.deleteArticle = function(article, callback) {
             }
         });
     });
+}
+
+exports.validateArticle = function(article, callback) {
+  if(article.title.length >= 5 && article.subtitle.length >= 5 && article.content.length >= 5){
+    callback(null, article);
+    return;
+  }
+  callback(null, false);
+  return;
 }
