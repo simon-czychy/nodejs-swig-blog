@@ -8,8 +8,8 @@
     <div class="article--content">{{ article.content|raw }}</div>
     {% if isAdmin %}
     <div class="moderation">
-        <a id="delete--article" class="button pull-right">Löschen</a>
-        <a class="button pull-right">Bearbeiten</a>
+      <a id="delete--article" class="button pull-right" data-id="{{article.id}}">Löschen</a>
+      <a class="button pull-right">Bearbeiten</a>
     </div>
     {% endif %}
     <div class="author">
