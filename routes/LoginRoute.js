@@ -1,8 +1,5 @@
-var express = require('express');
-var router = express.Router();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var Webuser  = require("../application/models/Webuser");
 var swig  = require("../application/models/SwigRenderer");
 var config = require("../application/config/config").Config;
 

@@ -1,6 +1,4 @@
 "use strict";
-var moment = require("moment");
-
 module.exports = class Article {
   constructor(title, subtitle, content, tags, authorId) {
     this.title = title;

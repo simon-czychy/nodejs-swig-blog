@@ -1,12 +1,5 @@
-var express = require('express');
-var router = express.Router();
-var rdb = require("rethinkdb");
-var DBConnection = require("../DataBaseConnector");
+
 var swig  = require("../application/models/SwigRenderer");
-var Webuser  = require("../application/models/Webuser");
-var Article = require("../application/models/Article");
-var OArticle = require("../application/models/OArticle");
-var moment = require("moment");
 
 
 /* GET article page. */

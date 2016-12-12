@@ -1,9 +1,3 @@
-var express = require('express');
-var router = express.Router();
-
-var rdb = require("rethinkdb");
-var Webuser  = require("../application/models/Webuser");
-var Article  = require("../application/models/Article");
 var articles;
 
 var swig = require("../application/models/SwigRenderer");

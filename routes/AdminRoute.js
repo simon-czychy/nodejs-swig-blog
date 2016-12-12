@@ -1,11 +1,4 @@
-var express = require('express');
-var router = express.Router();
-var rdbHelper = require('../DataBaseConnector');
-var Webuser  = require("../application/models/Webuser");
-var rdb = require("rethinkdb");
 var swig  = require("../application/models/SwigRenderer");
-
-rdbHelper.connect();
 
 /* GET admin page. */
 router.get('/', function(req, res, next) {
@@ -26,10 +19,6 @@ router.get('/', function(req, res, next) {
   else {
     swig.RenderIndex(res);
   }
-  
-  
-  
-  
 });
 
 module.exports = router;

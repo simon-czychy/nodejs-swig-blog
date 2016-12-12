@@ -1,16 +1,27 @@
-var express = require('express');
+//Global requires
+global.express = require('express');
+global.router = express.Router();
+global.rdb = require("rethinkdb");
+global.Webuser  = require("./application/models/Webuser");
+global.Article  = require("./application/controller/Article");
+global.OArticle  = require("./application/models/OArticle");
+global.moment = require("moment");
+
+
+
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser');
-
 var cons = require('consolidate');
 
-
-// Default Route for Index
+// Default Routes
 var IndexRoute = require('./routes/IndexRoute');
 var LoginRoute = require('./routes/LoginRoute');
 var LogoutRoute = require('./routes/LogoutRoute');
 var AdminRoute = require('./routes/AdminRoute');
 var ArticleRoute = require('./routes/ArticleRoute');
+
+
+
 
 
 //create express instance

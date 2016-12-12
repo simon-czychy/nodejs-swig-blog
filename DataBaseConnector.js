@@ -1,5 +1,4 @@
 var dbConfig = require('./application/config/config').dbConfig,
-    rdb = require('rethinkdb'),
     connectionPooling = false,
     connectionPool = null,
     config = require("./application/config/config").Config;
