@@ -109,13 +109,13 @@ $(document).ready(function() {
         $.ajax({
             url: "/article/delete",
             data: {
-                "uniqueArticleID": $('a#articletitle').attr("href")
+                "id": btnDeleteArticle.data("id")
             },
             type: "POST",
             success: function (result) {
-                if (result == "article-added"){
+                if (result == "article-deleted"){
                     if($('.alertbox').length == 0) {
-                        showMessage("Article succesful added.", "success");
+                        showMessage("Article succesful deleted.", "success");
                     }
                     window.setTimeout(function() {
                         window.location = "/";
@@ -123,7 +123,7 @@ $(document).ready(function() {
                 }
                 else if (result == "not-loggedin") {
                     if($('.alertbox').length == 0){
-                        showMessage("You cannot add articles as a guest. Please log in.", "danger");
+                        showMessage("You cannot delete articles as a guest. Please log in.", "danger");
                     }
                 }
                 else {
