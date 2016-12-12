@@ -11,7 +11,8 @@
 <div class="articles">
   {% for article in articles %}
       {% set variables = {
-        "article": article
+        "article": article,
+        "isAdmin": isAdmin
       }%}
       {% include 'article.html' with variables only %}
   {% endfor %}
