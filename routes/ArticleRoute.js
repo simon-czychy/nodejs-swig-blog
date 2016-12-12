@@ -52,6 +52,30 @@ router.post('/add', function(req, res) {
   }
 });
 
+router.post('/delete', function(req, res) {
+  if(req.cookies.userid && req.cookies.email) {
+
+      Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
+        if (!user || typeof user == "undefined") {
+          res.send("not-loggedin");
+        }
+        else {
+          Article.deleteArticle(req.body.id, function(connection, info) {
+            if(!info || typeof info == "undefined") {
+              res.send("error");
+            }
+            else {
+              res.send("article-deleted");
+            }
+          });
+        }
+      });
+  }
+  else {
+    swig.RenderIndex(res);
+  }
+});
+
 
 /* GET article page. */
 router.get('/', function(req, res, next) {
