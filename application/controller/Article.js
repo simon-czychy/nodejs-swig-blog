@@ -12,12 +12,11 @@ module.exports = class Article extends ArticleModel {
   add(article, callback) {
     console.log("AddArticle: %s", article.title);
     DBConnection.onConnection(function(err,connection) {
-        if(err) {
+        if(err || !article) {
             console.log("[ERROR][AddArticle]: %s:%s\n%s", err.name, err.msg, err.message);
             callback(null);
             return;
         }
-
         rdb.table("article").insert(article).run(connection, function(err, info) {
             if(err) {
                 console.log("[ERROR][AddArticle]: %s:%s\n%s", err.name, err.msg, err.message);
@@ -63,8 +62,8 @@ module.exports = class Article extends ArticleModel {
     });
   }
 
-  delete(article, callback) {
-    console.log("DeleteArticle: %s", article.title);
+  delete(id, callback) {
+    console.log("DeleteArticle: %s", id);
 
     DBConnection.onConnection(function(err,connection) {
         if(err) {
@@ -73,7 +72,7 @@ module.exports = class Article extends ArticleModel {
             return;
         }
 
-        rdb.table("article").filter({"id": article}).delete().run(connection, function(err, info) {
+        rdb.table("article").filter({"id": id}).delete().run(connection, function(err, info) {
             if(err) {
                 console.log("[ERROR][DeleteArticle]: %s:%s\n%s", err.name, err.msg, err.message);
                 callback(null);

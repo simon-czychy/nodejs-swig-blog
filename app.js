@@ -1,6 +1,6 @@
 //Global requires
 global.express = require('express');
-global.router = express.Router();
+var router = express.Router();
 global.rdb = require("rethinkdb");
 global.Webuser  = require("./application/models/Webuser");
 global.ArticleModel = require("./application/models/ArticleModel");

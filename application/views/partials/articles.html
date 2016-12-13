@@ -14,7 +14,8 @@
   {% for article in articles %}
       {% set variables = {
         "article": article,
-        "isAdmin": isAdmin
+        "isAdmin": isAdmin,
+        "showAuthor": false
       }%}
       {% include 'article.html' with variables only %}
   {% endfor %}

@@ -1,4 +1,4 @@
-
+var router = express.Router();
 var swig  = require("../application/models/SwigRenderer");
 
 
@@ -24,15 +24,15 @@ router.post('/add', function(req, res) {
           res.send("not-loggedin");
         }
         else {
-          var article = new Article(req.body.title, req.body.subtitle, req.body.content, req.body.tags, req.cookies.userid);
-          console.log(article);
+          var article = new ArticleModel(req.body.title, req.body.subtitle, req.body.content, req.body.tags, req.cookies.userid);
+
           Article.validate(article, function(err, validated) {
             if(!validated) {
               console.log("Could not validate article!");
               res.send("error");
             }
             else {
-              Article.add(res, article, function(connection, info) {
+              Article.add(validated, function(connection, info) {
                 if(!info) {
                   res.send("error");
                 }

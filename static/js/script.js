@@ -49,7 +49,7 @@ $(document).ready(function() {
     btnLogout.on("click", function() {
             $.ajax({
                 url: "/logout",
-                data: {username: emailinput.val(), password: passwordinput.val()},
+                data: { "id": 1 },
                 type: "POST",
                 success: function (result) {
                     window.location = "/";

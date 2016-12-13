@@ -1,5 +1,6 @@
 {% set author = article.authorId[0] %}
 {% set href = article.title|lower|replace(' ', '-', 'g') %}
+{% set showAuthor = showAuthor %}
 <div id="{{ href }}" class="article col-md-8">
     <h4 class="subtitle"><p>{{ article.subtitle|raw }}</p></h4>
     <h2 class="title"><a href="{{ href }}">{{ article.title|raw }}</a></h2>
@@ -10,6 +11,7 @@
       <a class="button pull-right">Bearbeiten</a>
     </div>
     {% endif %}
+    {% if showAuthor %}
     <div class="author">
         <div class="row">
             <div class="col-md-3">
@@ -21,6 +23,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 <div class="col-md-4 tags">
     <div class="col-md-12"><div class="title">Tags:</div></div>

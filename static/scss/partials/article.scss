@@ -10,6 +10,8 @@
   .articles {
     .article {
       font-family: 'Lora', serif;
+      border-top: 1px solid lightgrey;
+      min-height: 300px;
       .moderation {
         margin-bottom: 80px;
         a.button {
@@ -32,9 +34,8 @@
 
     .tags {
       .title {
-        margin-top: 110px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid black;
+        padding: 10px;
+        border-top: 1px solid black;
         margin-bottom: 10px;
       }
       .author {
@@ -65,4 +66,3 @@
     }
   }
 }
-

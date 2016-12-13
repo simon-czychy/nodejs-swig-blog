@@ -1,3 +1,4 @@
+var router = express.Router();
 var swig  = require("../application/models/SwigRenderer");
 
 /* GET admin page. */

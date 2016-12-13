@@ -1,3 +1,4 @@
+var router = express.Router();
 var articles;
 
 var swig = require("../application/models/SwigRenderer");
