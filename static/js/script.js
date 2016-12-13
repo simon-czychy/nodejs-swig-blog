@@ -135,10 +135,7 @@ $(document).ready(function() {
             error: function (err, status, thrown) {
             }
         });
-
     });
-
-
 });
 
 function fadeInInvisibleElement(element, time) {
