@@ -62,6 +62,32 @@ module.exports = class Article extends ArticleModel {
     });
   }
 
+  get(href, callback) {
+    console.log("GetArticle: %s", href);
+
+    DBConnection.onConnection(function(err,connection) {
+        if(err) {
+            console.log("[ERROR][GetArticle]: %s:%s\n%s", err.name, err.msg, err.message);
+            callback(null);
+            return;
+        }
+        //rdb.table("article").filter(rdb.row("href").eq(href)).limit(1).run(connection, function(err, article) {
+        rdb.table('article').merge(function (article) {
+            return {
+                authorId: rdb.table('users').getAll(article('authorId'), {index: 'id'}).pluck("name", "avatar","desc").coerceTo('ARRAY')
+            }
+        }).filter(rdb.row("href").eq(href)).limit(1).run(connection, function(err, article) {
+            if(err) {
+                console.log("[ERROR][AddArticle]: %s:%s\n%s", err.name, err.msg, err.message);
+                callback(null);
+            }
+            else {
+                callback(null, article);
+            }
+        });
+    });
+  }
+
   delete(id, callback) {
     console.log("DeleteArticle: %s", id);
 
