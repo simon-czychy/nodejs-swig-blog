@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container content">
+    {% include 'partials/article.html' with {
+      "article": article,
+      "isAdmin": isAdmin,
+      "isloggedin": isloggedin,
+      "showSingleArticle": showSingleArticle
+    }%}
+</div>
+
+{% endblock %}

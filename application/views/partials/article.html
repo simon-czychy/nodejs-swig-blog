@@ -1,21 +1,20 @@
 {% set author = article.authorId[0] %}
-{% set href = article.title|lower|replace(' ', '-', 'g') %}
-{% set showAuthor = showAuthor %}
-<div id="{{ href }}" class="article col-md-8">
+{% set title = article.title|lower|replace(' ', '-', 'g') %}
+<div id="{{ title }}" class="article col-md-8">
     <h4 class="subtitle"><p>{{ article.subtitle|raw }}</p></h4>
-    <h2 class="title"><a href="{{ href }}">{{ article.title|raw }}</a></h2>
+    <h2 class="title"><a href="/article/show/{{ article.href }}">{{ article.title|raw }}</a></h2>
     <div class="article--content">{{ article.content|raw }}</div>
     {% if isAdmin %}
     <div class="moderation">
       <a id="delete--article" class="button pull-right" data-id="{{article.id}}">Löschen</a>
-      <a class="button pull-right">Bearbeiten</a>
+      <a id="edit--article" class="button pull-right" data-id="{{article.id}}">Bearbeiten</a>
     </div>
     {% endif %}
-    {% if showAuthor %}
+    {% if showSingleArticle %}
     <div class="author">
         <div class="row">
             <div class="col-md-3">
-                <img src="{{ author.avatar }}" alt="{{ author.name }}">
+                <img src="/{{ author.avatar }}" alt="{{ author.name }}">
             </div>
             <div class="col-md-9">
                 <p>Über {{ author.name }}:</p>
@@ -25,6 +24,7 @@
     </div>
     {% endif %}
 </div>
+{% if showSingleArticle %}
 <div class="col-md-4 tags">
     <div class="col-md-12"><div class="title">Tags:</div></div>
     <div class="col-md-12">
@@ -34,5 +34,5 @@
     </div>
     <div class="col-md-12 release--date">Veröffentlicht am: {{ article.releaseDate }}</div>
     <div class="col-md-12 author">Author: <a href="author/{{ author.name|lower|replace(' ','-','g') }}">{{ author.name }}</a></div>
-
 </div>
+{% endif %}
