@@ -67,7 +67,6 @@ router.get('/edit/:href', function(req, res) {
         res.send("not-loggedin");
       }
       else {
-        console.log(req);
         Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
           if(!cursor) {
             res.send("article-not-found");
@@ -164,7 +163,6 @@ router.post('/add', function(req, res) {
 
           Article.validate(article, function(err, validated) {
             if(!validated) {
-              console.log("Could not validate article!");
               res.send("error");
             }
             else {
@@ -246,7 +244,7 @@ router.post('/save', function(req, res) {
               res.send("error");
             }
             else {
-              res.send("article-deleted");
+              res.send("article-saved");
             }
           });
         }

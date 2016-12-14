@@ -15,7 +15,7 @@ router.post('/', urlencodedParser, function (req,res,next) {
     return res.status(400).send().end();
   }
   Webuser.manualLogin(req.body.username, req.body.password, res, function(connection, user) {
-    if(!user || typeof user == "undefined") {
+    if(!user) {
 
     }
     else {

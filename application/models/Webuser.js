@@ -21,27 +21,27 @@ exports.manualLogin = function(user, password, res, callback) {
         callback(null);
       }
       else {
-        var statusMessage = "unkown-error";
+        var result = { status: "unkown-error", message: "Something went wrong. Please contact the Administrator." };
         cursor.next(function(err, row) {
           if(err) {
             console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
             DBConnection.release(connection);
-            statusMessage = "user-not-found";
+            result = {status: "login-failed", message: "User or Password incorrect. Try again!" }
           }
           else {
               validatePassword(password, row.password, function(err, passCorrect) {
               if(passCorrect) {
                 callback(null, row);
-                statusMessage = "login-successful";
+                result = {status: "login-successful", message: "Login sucessful. Welcome User!" }
               }
               else {
                 callback('login-failed');
-                statusMessage = "bad-pass";
+                result = {status: "login-failed", message: "User or Password incorrect. Try again!" }
               }
                 DBConnection.release(connection);
             });
           }
-          res.send(statusMessage);
+          res.send(result);
         });
       }
     });

@@ -8,62 +8,69 @@
       margin-top: 25px;
     }
   }
-  .articles {
-    .article {
-      font-family: 'Lora', serif;
-      border-top: 1px solid lightgrey;
-      min-height: 300px;
-      .moderation {
-        margin-bottom: 80px;
-        a.button {
-          margin-left: 1%;
-        }
-      }
-      .subtitle {
-        margin-top: 50px;
-      }
-      .article--content {
-        font-size: 16px;
-      }
-      .author {
-        margin: 25px 0px;
-        padding: 25px 0px;
-        border-bottom: 1px solid lightgrey;
-        border-top: 1px solid lightgrey;
+  .article {
+    font-family: 'Lora', serif;
+    border-top: 1px solid lightgrey;
+    min-height: 300px;
+    .moderation {
+      margin-bottom: 80px;
+      a.button {
+        margin-left: 1%;
       }
     }
+    .subtitle {
+      margin-top: 50px;
+    }
+    .article--content {
+      font-size: 16px;
+    }
+    .author {
+      margin: 25px 0px;
+      padding: 25px 0px;
+      border-bottom: 1px solid lightgrey;
+      border-top: 1px solid lightgrey;
+    }
+  }
 
-    .tags {
-      .title {
+  .sidebar {
+
+    .inner {
+      border-top: 1px solid black;
+
+      .tags {
         padding: 10px;
-        border-top: 1px solid black;
-        margin-bottom: 10px;
-      }
-      .author {
-        margin-top: 5px;
-      }
-      span.tag {
-        background-color: lightgrey;
-        border: 1px solid lightgrey;
-        border-radius: 5px;
-        font-size: 12px;
-        padding: 3px;
-        margin-right: 5px;
+        border-bottom: 1px solid lightgrey;
 
-        -moz-transition: all .2s ease-in;
-        -o-transition: all .2s ease-in;
-        -webkit-transition: all .2s ease-in;
-        transition: all .2s ease-in;
+        .tag {
+          background-color: lightgrey;
+          border: 1px solid lightgrey;
+          border-radius: 5px;
+          font-size: 12px;
+          padding: 3px;
+          margin-right: 5px;
 
-        &:hover {
-          color: dodgerblue;
-          cursor: pointer;
+          -moz-transition: all .2s ease-in;
+          -o-transition: all .2s ease-in;
+          -webkit-transition: all .2s ease-in;
+          transition: all .2s ease-in;
+
+          &:hover {
+            color: dodgerblue;
+            cursor: pointer;
+          }
         }
       }
+    }
+    .author {
+      margin-top: 5px;
+      padding: 10px;
+      border-bottom: 1px solid lightgrey;
+    }
 
-      .release--date {
-        margin-top: 25px;
-      }
+    .release--date {
+      margin-top: 5px;
+      padding: 10px;
+      border-bottom: 1px solid lightgrey;
     }
   }
 }

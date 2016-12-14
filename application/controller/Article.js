@@ -32,6 +32,7 @@ module.exports = class Article extends ArticleModel {
   update(article, callback) {
 
     console.log("UpdateArticle: %s", article.title);
+    console.log("================ UPDATE ARTICLE ====================");
     console.log(article);
     DBConnection.onConnection(function(err,connection) {
         if(err || !article) {

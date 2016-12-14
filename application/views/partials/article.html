@@ -4,7 +4,7 @@
     <h4 class="subtitle"><p>{{ article.subtitle|raw }}</p></h4>
     <h2 class="title"><a href="/article/show/{{ article.href }}">{{ article.title|raw }}</a></h2>
     <div class="article--content">{{ article.content|raw }}</div>
-    {% if isAdmin %}
+    {% if isAdmin and showSingleArticle %}
     <div class="moderation">
       <a id="delete--article" class="button pull-right" data-id="{{article.id}}">Löschen</a>
       <a href="/article/edit/{{ article.href }}" id="edit--article" class="button pull-right">Bearbeiten</a>
@@ -25,14 +25,15 @@
     {% endif %}
 </div>
 {% if showSingleArticle %}
-<div class="col-md-4 tags">
-    <div class="col-md-12"><div class="title">Tags:</div></div>
-    <div class="col-md-12">
-      {% for tag in article.tags %}
-        <span class="tag">{{ tag }}</span>
-      {% endfor %}
-    </div>
-    <div class="col-md-12 release--date">Veröffentlicht am: {{ article.releaseDate }}</div>
+<div class="col-md-4 sidebar">
+  <div class="inner">
+    {% if article.tags %}
+    <div class="col-md-12 tags">Tags: {% for tag in article.tags %}
+      <span class="tag">{{ tag }}</span>
+    {% endfor %}</div>
+    {% endif %}
+    <div class="col-md-12 release--date">Datum: {{ article.releaseDate }}</div>
     <div class="col-md-12 author">Author: <a href="author/{{ author.name|lower|replace(' ','-','g') }}">{{ author.name }}</a></div>
+    </div>
 </div>
 {% endif %}

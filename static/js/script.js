@@ -14,33 +14,23 @@ $(document).ready(function() {
         if(inputsVisible) {
             $.ajax({
                 url: "/login",
-                data: {username: emailinput.val(), password: passwordinput.val()},
+                data: { username: emailinput.val(), password: passwordinput.val() },
                 type: "POST",
                 success: function (result) {
                     $('.alertbox').remove();
-                    if (result == 'login-successful'){
+                    if (result.status == 'login-successful'){
                       window.location = "/";
                     }
-                    else if(result == 'user-not-found') {
-                      //$('.alertbox').remove();
+                    else {
                       if($('.alertbox').length == 0){
-                          showMessage(status, "danger");
+                          showMessage(result.message, "danger");
                       }
-
-                    }
-                    else if(result == 'bad-pass') {
-                    //  $('.alertbox').remove();
-                      if($('.alertbox').length == 0){
-                          showMessage(status, "danger");
-                      }
-
                     }
                 },
                 error: function (err, status, thrown) {
                 }
             });
         }
-
         inputsVisible = true;
     });
 
@@ -102,6 +92,45 @@ $(document).ready(function() {
     });
 
 
+    var btnSaveArticle = $("#save--article");
+    btnSaveArticle.click(function() {
+      console.log(window.location);
+      tinyMCE.triggerSave(false, true);
+      $.ajax({
+          url: "/article/save",
+          data: {
+            "title": $('input[name=title]').val(),
+            "subtitle": $('input[name=subtitle]').val(),
+            "content": tinyMCE.activeEditor.getContent(),
+            "tags": $('input[name=tags]').val(),
+            "id": $('input[name=id]').val()
+          },
+          type: "POST",
+          success: function (result) {
+            if (result == "article-saved"){
+                if($('.alertbox').length == 0) {
+                    showMessage("Article succesful saved. You will be redirected to the last page.", "success");
+                }
+                window.setTimeout(function() {
+                    window.location = document.referrer;
+                }, 5000);
+            }
+            else if (result == "not-loggedin") {
+              if($('.alertbox').length == 0){
+                  showMessage("You cannot save articles as a guest. Please log in.", "danger");
+              }
+            }
+            else {
+                if($('.alertbox').length == 0){
+                    showMessage("Something went wrong! Check the logs.", "danger");
+                }
+            }
+          },
+          error: function (err, status, thrown) {
+          }
+      });
+
+    });
 
     var btnDeleteArticle = $("#delete--article");
     btnDeleteArticle.on("click", function() {
@@ -136,10 +165,6 @@ $(document).ready(function() {
             }
         });
     });
-
-    if(window.location.href.indexOf("article/edit/") > -1) {
-
-    }
 });
 
 function fadeInInvisibleElement(element, time) {
