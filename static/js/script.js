@@ -136,6 +136,10 @@ $(document).ready(function() {
             }
         });
     });
+
+    if(window.location.href.indexOf("article/edit/") > -1) {
+
+    }
 });
 
 function fadeInInvisibleElement(element, time) {

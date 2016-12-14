@@ -19,7 +19,7 @@ router.get('/show/:href', function(req, res) {
                 console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
               }
               else {
-                swig.Render(res, 'articleview', {
+                swig.Render(res, 'article/view', {
                   article: article,
                   isAdmin: user.level === "admin",
                   isloggedin: true,
@@ -57,6 +57,98 @@ router.get('/show/:href', function(req, res) {
         }
       });
     }
+  }
+});
+
+router.get('/edit/:href', function(req, res) {
+  if(req.cookies.userid && req.cookies.email) {
+    Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
+      if (!user) {
+        res.send("not-loggedin");
+      }
+      else {
+        console.log(req);
+        Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
+          if(!cursor) {
+            res.send("article-not-found");
+          }
+          else {
+            cursor.next(function(err, article) {
+              if(err) {
+                console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+              }
+              else {
+                swig.Render(res, 'article/edit', {
+                  article: article,
+                  isAdmin: user.level === "admin",
+                  isloggedin: true,
+                  showSingleArticle: true
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+  else {
+    if (!req) {
+      res.send("request-broken");
+    }
+    else {
+      Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
+        if(!cursor) {
+          res.send("article-not-found");
+        }
+        else {
+          cursor.next(function(err, article) {
+            if(err) {
+              console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+            }
+            else {
+              swig.Render(res, 'articleview', {
+                article: article,
+                isAdmin: false,
+                showSingleArticle: true
+              });
+            }
+          });
+        }
+      });
+    }
+  }
+});
+
+router.get('/show/:href', function(req, res) {
+  if(req.cookies.userid && req.cookies.email) {
+    Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
+      if (!user) {
+        res.send("not-loggedin");
+      }
+      else {
+        console.log(req);
+        Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
+          if(!cursor) {
+            res.send("article-not-found");
+          }
+          else {
+            cursor.next(function(err, article) {
+              if(err) {
+                console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+              }
+              else {
+                swig.Render(res, 'article/edit', {
+                  article: article,
+                  isAdmin: user.level === "admin",
+                  isloggedin: true,
+                  showSingleArticle: true
+                });
+              }
+            });
+          }
+        });
+      }
+    });
   }
 });
 
@@ -121,13 +213,12 @@ router.post('/delete', function(req, res) {
 
 router.post('/get', function(req, res) {
   if(req.cookies.userid && req.cookies.email) {
-
       Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
         if (!user) {
           res.send("not-loggedin");
         }
         else {
-          Article.getArticle(req.body.id, function(connection, info) {
+          Article.getArticle(req.body.href, function(connection, info) {
             if(!info || typeof info == "undefined") {
               res.send("error");
             }
@@ -145,14 +236,13 @@ router.post('/get', function(req, res) {
 
 router.post('/save', function(req, res) {
   if(req.cookies.userid && req.cookies.email) {
-
       Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
         if (!user) {
           res.send("not-loggedin");
         }
         else {
-          Article.saveArticle(req.body.id, function(connection, info) {
-            if(!info || typeof info == "undefined") {
+          Article.update(req.body, function(connection, info) {
+            if(!info) {
               res.send("error");
             }
             else {

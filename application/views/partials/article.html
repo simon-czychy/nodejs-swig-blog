@@ -7,7 +7,7 @@
     {% if isAdmin %}
     <div class="moderation">
       <a id="delete--article" class="button pull-right" data-id="{{article.id}}">Löschen</a>
-      <a id="edit--article" class="button pull-right" data-id="{{article.id}}">Bearbeiten</a>
+      <a href="/article/edit/{{ article.href }}" id="edit--article" class="button pull-right">Bearbeiten</a>
     </div>
     {% endif %}
     {% if showSingleArticle %}

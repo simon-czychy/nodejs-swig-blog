@@ -29,6 +29,28 @@ module.exports = class Article extends ArticleModel {
     });
   }
 
+  update(article, callback) {
+
+    console.log("UpdateArticle: %s", article.title);
+    console.log(article);
+    DBConnection.onConnection(function(err,connection) {
+        if(err || !article) {
+            console.log("[ERROR][UpdateArticle]: %s:%s\n%s", err.name, err.msg, err.message);
+            callback(null);
+            return;
+        }
+        rdb.table("article").get(article.id).update({title: article.title, subtitle: article.subtitle, content: article.content, tags: article.tags}).run(connection, function(err, info) {
+            if(err) {
+                console.log("[ERROR][UpdateArticle]: %s:%s\n%s", err.name, err.msg, err.message);
+                callback(null);
+            }
+            else {
+                callback(null, info);
+            }
+        });
+    });
+  }
+
   getAll(callback) {
     console.log("GetArticles");
 
