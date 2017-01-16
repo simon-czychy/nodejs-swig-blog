@@ -122,6 +122,10 @@ exports.getUserByID = function (id, callback) {
   });
 }
 
+exports.isUserAdmin = function (user) {
+  return !!user && user.hasOwnProperty("level");
+}
+
 
 
 //==================================== PRIVATE METHODS ===================================//
