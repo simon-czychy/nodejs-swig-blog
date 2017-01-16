@@ -2,154 +2,81 @@ var router = express.Router();
 var swig  = require("../application/models/SwigRenderer");
 
 router.get('/show/:href', function(req, res) {
-  if(req.cookies.userid && req.cookies.email) {
-    Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
-      if (!user) {
-        res.send("not-loggedin");
-      }
-      else {
-        console.log(req);
-        Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
-          if(!cursor) {
-            res.send("article-not-found");
-          }
-          else {
-            cursor.next(function(err, article) {
-              if(err) {
-                console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
-              }
-              else {
+  if (!req) {
+    res.send("empty-request");
+  }
+  Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
+    if(!cursor) {
+      res.send("article-not-found");
+    }
+    else {
+      cursor.next(function(err, article) {
+        if(err) {
+          console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+          swig.RenderError(res, err.name, err.msg);
+        }
+        else {
+          if(req.cookies.userid && req.cookies.email) {
+            Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
+              if(user) {
                 swig.Render(res, 'article/view', {
                   article: article,
-                  isAdmin: user.level === "admin",
+                  isAdmin: Webuser.isUserAdmin(user),
                   isloggedin: true,
                   showSingleArticle: true
                 });
               }
             });
+          }else {
+            swig.Render(res, 'article/view', {
+              article: article,
+              showSingleArticle: true
+            });
           }
-        });
-      }
-    });
-  }
-  else {
-    if (!req) {
-      res.send("request-broken");
-    }
-    else {
-      Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
-        if(!cursor) {
-          res.send("article-not-found");
-        }
-        else {
-          cursor.next(function(err, article) {
-            if(err) {
-              console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
-            }
-            else {
-              swig.Render(res, 'articleview', {
-                article: article,
-                isAdmin: false,
-                showSingleArticle: true
-              });
-            }
-          });
         }
       });
     }
-  }
+  });
 });
+
 
 router.get('/edit/:href', function(req, res) {
-  if(req.cookies.userid && req.cookies.email) {
-    Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
-      if (!user) {
-        res.send("not-loggedin");
-      }
-      else {
-        Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
-          if(!cursor) {
-            res.send("article-not-found");
-          }
-          else {
-            cursor.next(function(err, article) {
-              if(err) {
-                console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
-              }
-              else {
+  if (!req) {
+    res.send("empty-request");
+  }
+  Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
+    if(!cursor) {
+      res.send("article-not-found");
+    }
+    else {
+      cursor.next(function(err, article) {
+        if(err) {
+          console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
+        }
+        else {
+          if(req.cookies.userid && req.cookies.email) {
+            Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
+              if(user) {
                 swig.Render(res, 'article/edit', {
                   article: article,
-                  isAdmin: user.level === "admin",
+                  isAdmin: Webuser.isUserAdmin(user),
                   isloggedin: true,
                   showSingleArticle: true
                 });
               }
             });
+          }else {
+            swig.Render(res, 'article/edit', {
+              article: article,
+              showSingleArticle: true
+            });
           }
-        });
-      }
-    });
-  }
-  else {
-    if (!req) {
-      res.send("request-broken");
-    }
-    else {
-      Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
-        if(!cursor) {
-          res.send("article-not-found");
-        }
-        else {
-          cursor.next(function(err, article) {
-            if(err) {
-              console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
-            }
-            else {
-              swig.Render(res, 'articleview', {
-                article: article,
-                isAdmin: false,
-                showSingleArticle: true
-              });
-            }
-          });
         }
       });
     }
-  }
+  });
 });
 
-router.get('/show/:href', function(req, res) {
-  if(req.cookies.userid && req.cookies.email) {
-    Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
-      if (!user) {
-        res.send("not-loggedin");
-      }
-      else {
-        console.log(req);
-        Article.get(req.originalUrl.split("/")[3], function(err, cursor) {
-          if(!cursor) {
-            res.send("article-not-found");
-          }
-          else {
-            cursor.next(function(err, article) {
-              if(err) {
-                console.log("[ERROR][manualLogin][CURSOR]: %s:%s\n%s", err.name, err.msg, err.message);
-              }
-              else {
-                swig.Render(res, 'article/edit', {
-                  article: article,
-                  isAdmin: user.level === "admin",
-                  isloggedin: true,
-                  showSingleArticle: true
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-  }
-});
 
 router.post('/add', function(req, res) {
   if(req.cookies.userid && req.cookies.email) {
@@ -180,6 +107,7 @@ router.post('/add', function(req, res) {
       });
   }
   else {
+    //TODO: Error logging or smth like that
     swig.RenderIndex(res);
   }
 });
@@ -204,30 +132,7 @@ router.post('/delete', function(req, res) {
       });
   }
   else {
-    swig.RenderIndex(res);
-  }
-});
-
-
-router.post('/get', function(req, res) {
-  if(req.cookies.userid && req.cookies.email) {
-      Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function (connection, user) {
-        if (!user) {
-          res.send("not-loggedin");
-        }
-        else {
-          Article.getArticle(req.body.href, function(connection, info) {
-            if(!info || typeof info == "undefined") {
-              res.send("error");
-            }
-            else {
-              res.send("article-loaded");
-            }
-          });
-        }
-      });
-  }
-  else {
+    //TODO: Error logging or smth like that
     swig.RenderIndex(res);
   }
 });
@@ -251,14 +156,9 @@ router.post('/save', function(req, res) {
       });
   }
   else {
+    //TODO: Error logging or smth like that
     swig.RenderIndex(res);
   }
-});
-
-
-/* GET article page. */
-router.get('/', function(req, res, next) {
-  //TODO
 });
 
 module.exports = router;
