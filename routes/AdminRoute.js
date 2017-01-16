@@ -3,11 +3,12 @@ var swig  = require("../application/models/SwigRenderer");
 
 /* GET admin page. */
 router.get('/', function(req, res, next) {
-
   if(req.cookies.userid && req.cookies.email) {
     Webuser.autoLogin(req.cookies.userid, req.cookies.email, res, function(connection, user) {
       if(!user || typeof user == "undefined") {
-        swig.RenderIndex(res);
+        swig.Render(res, "error", {
+          status: 404,
+        });
       }
       else {
         swig.Render(res, "admin", {
@@ -18,7 +19,9 @@ router.get('/', function(req, res, next) {
     });
   }
   else {
-    swig.RenderIndex(res);
+    swig.Render(res, "error", {
+      status: 404,
+    });
   }
 });
 
