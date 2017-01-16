@@ -8,3 +8,12 @@ exports.RenderIndex = function(res, loggedin, isAdmin) {
     isAdmin: isAdmin || false
   });
 }
+
+exports.RenderError = function(res, name, error) {
+  res.render('error',  {
+    isloggedin: false,
+    isAdmin: false,
+    name: name,
+    error: error
+  });
+}
