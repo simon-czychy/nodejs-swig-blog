@@ -19,11 +19,11 @@
             {% if status == '404' %}
                 <h3>Oops! Couldn't find the requested page!</h3>
             {% else %}
-                <h3>Message:</h3> {{ message }}
+                {{ name }}
                 <pre>Error: {{ error }}</pre>
             {% endif %}
         {% else %}
-            <h3>Message:</h3> {{ message }}
+            <h3>{{ name }}</h3>
             <pre>Error: {{ error }}</pre>
         {% endif %}
     </div>
