@@ -8,7 +8,7 @@ module.exports.dbConfig = {
   port: parseInt(process.env.RDB_PORT) || 28015,
   db  : process.env.RDB_DB || 'blog',
   pool: {
-    min: 5,
+    min: 20,
     max: 100,
     log: true,
     idleTimeoutMillis : 1 * 60 * 1000, // 1 minute
