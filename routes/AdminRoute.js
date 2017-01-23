@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
       else {
         swig.Render(res, "admin", {
           "isloggedin": true,
-          "isAdmin": user.level === "admin"
+          "isAdmin": Webuser.isUserAdmin(user)
         });
       }
     });
