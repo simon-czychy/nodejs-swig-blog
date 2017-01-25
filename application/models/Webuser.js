@@ -123,7 +123,7 @@ exports.getUserByID = function (id, callback) {
 }
 
 exports.isUserAdmin = function (user) {
-  return !!user && user.hasOwnProperty("level");
+  return !!user && user.hasOwnProperty("level") && user.level === "admin";
 }
 
 
@@ -159,7 +159,7 @@ var validateCookie = function(userid, rowuserid, callback)
   callback(null, userid === rowuserid)
 }
 
-/*
+/* for generating new accounts
 var createHashPassword = function(plainPass) {
     var salt = generateSalt().substr(0,10);
     var validHash = salt + md5(plainPass + salt);

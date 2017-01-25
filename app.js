@@ -1,14 +1,14 @@
+//base path
+global.__base = __dirname + '/';
 //Global requires
-global.express = require('express');
-var router = express.Router();
-global.rdb = require("rethinkdb");
-global.Webuser  = require("./application/models/Webuser");
-global.ArticleModel = require("./application/models/ArticleModel");
-var Article  = require("./application/controller/Article");
-global.Article = new Article();
+global.rdb = require('./application/config/globals').RethinkDB();
+global.ArticleModel = require('./application/config/globals').ArticleModel();
+global.express = require('./application/config/globals').Express();
+global.Webuser  = require("./application/config/globals").Webuser();
+global.ArticleController  = require('./application/config/globals').Article();
+global.Article = new ArticleController();
 
-
-
+var router = global.express.Router();
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser');
 var cons = require('consolidate');
