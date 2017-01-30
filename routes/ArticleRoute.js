@@ -27,7 +27,7 @@ router.get('/show/:href', function(req, res) {
                 });
               }
             });
-          }else {
+          } else {
             swig.Render(res, 'article/view', {
               article: article,
               showSingleArticle: true
@@ -65,7 +65,7 @@ router.get('/edit/:href', function(req, res) {
                 });
               }
             });
-          }else {
+          } else {
             swig.Render(res, 'article/edit', {
               article: article,
               showSingleArticle: true
